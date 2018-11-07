@@ -1,0 +1,394 @@
+% \documentclass{jsarticle}
+\usepackage{amsmath}
+\usepackage{amssymb, mathtools, empheq}%the last one is for displaying system for equations
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{bbm}
+% \usepackage[math-style=ISO]{unicode-math} --- needs LuaLaTeX or XeTeX
+% \usepackage{pxfonts}
+\usepackage{comment}%comment enviromment fobiddens tabbing before \begin and \end{comment}
+\usepackage{subfiles,docmute}
+\usepackage[]{multicol} %multicolum enviroment
+% \usepackage[dvips]{graphicx,color} obsolute
+\usepackage[dvipdfmx]{graphicx,color}
+\usepackage[svgnames,dvipdfmx]{xcolor}
+\usepackage{caption}
+%\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{ulem}
+\usepackage{udline} % udline is for Japanese
+% \usepackage{otf} %roman number mojibake
+\usepackage{listings}
+\usepackage{jlisting}
+\usepackage{bxpapersize}
+\usepackage{ascmac} %enclosure
+\usepackage[at]{easylist}
+\renewcommand{\prepartname}{Part}
+\renewcommand{\postpartname}{}
+\renewcommand{\thepart}{\arabic{part}}
+\renewcommand{\refname}{参考文献} % this can change the section of reference
+\usepackage{url}
+\usepackage[dvipdfmx]{pdfpages}
+\usepackage{chapterbib}
+\setcounter{footnote}{0}
+\setcounter{section}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\makeatletter
+\newcommand{\subsubsubsection}{\@startsection{paragraph}{4}{\z@}%
+  {1.0\Cvs \@plus.5\Cdp \@minus.2\Cdp}%
+  {.1\Cvs \@plus.3\Cdp}%
+  {\reset@font\sffamily\normalsize}
+}
+\makeatother
+\setcounter{secnumdepth}{4}
+
+% add section numblings to  equation numblings
+\makeatletter
+\renewcommand{\theequation}{%
+  \thesection.\arabic{equation}}
+\@addtoreset{equation}{section}
+\makeatother
+
+
+\theoremstyle{definition} %some magic words to make letters in roman in thm enviromment
+\newtheorem{thm}{Thm}[section]
+\newtheorem{defi}[thm]{Def}
+\newtheorem{prop}[thm]{Prop}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Cor}
+\newtheorem{rem}[thm]{Rem}
+\renewcommand{\therem}{}
+\newtheorem{term}[thm]{Term}
+\renewcommand{\theterm}{}
+\newtheorem{eg}[thm]{e.g.}
+\newcounter{countntt}
+\setcounter{countntt}{0}
+\newtheorem{ntt}[countntt]{Notation}
+\newcounter{countq}
+\setcounter{countq}{0}
+\newtheorem{q}[countq]{Question}
+\newtheorem{prob}[thm]{Problem}
+\newcounter{countproblem}
+\setcounter{countproblem}{0}
+\newtheorem{problem}[countproblem]{Problem}
+% \setcounter{prob}{0}
+\newtheorem{ans}[countq]{Answer}
+\newtheorem{hint}{Hint}
+\newtheorem{step}{Step}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{cnjc}{Conjecture}
+\newtheorem{conv}{約束} %convention
+\newtheorem{apdx}{余談} %appendix
+\newtheorem{obs}{Observaton}
+\newtheorem{note}{Note}
+\newtheorem{memo}{Memo}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{cau}{Caution!}
+\newtheorem{feeling}{気持ち}
+\newtheorem{defprop}[thm]{Def-Prop}
+\newtheorem{defthm}[thm]{Def-Thm}
+\renewcommand{\thentt}{}
+\renewcommand\proofname{\textit{proof}}
+\renewcommand\qedsymbol{$\blacksquare$} %blacken halmos mark
+% ProoF With Name emviromment
+\newenvironment{pfwn}[1]{\noindent \textit{proof of #1.}\par}{ \rightline{\qedsymbol}} %you need to insert a blank line just before \end{pfwn} in oder to display qedsymbol
+\newenvironment{skpf}{\noindent \textit{sketch of proof.}\par}{ \rightline{\qedsymbol}}
+% no numbling--
+\newtheorem*{defi*}{Def}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{rem*}{Rem}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{cor*}{Cor}
+\newtheorem*{thm*}{Thm}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{teiri*}{定理}
+\newtheorem*{prop*}{Prop}
+\newtheorem*{tec*}{Technique}
+\newtheorem*{term*}{Term}
+\newtheorem*{ex*}{e.g}
+\newtheorem*{rei*}{例}
+\newtheorem*{prob*}{Problem}
+\newtheorem*{q*}{Question}
+\newtheorem*{ans*}{Answer}
+\newtheorem*{hint*}{Hint}
+\newtheorem*{fact*}{Fact}
+\newtheorem*{apdx*}{余談} %appendix
+\newtheorem*{cnjc*}{Conjecture}
+\newtheorem*{conv*}{約束}
+\newtheorem*{obs*}{Observaton}
+\newtheorem*{note*}{Note}
+\newtheorem*{cau*}{Caution!}
+\newtheorem*{memo*}{Memo}
+\newtheorem*{claim*}{Claim}
+\newtheorem*{feeling*}{気持ち}
+\newtheorem*{defprop*}{Def-Prop}
+\newtheorem*{defthm*}{Def-Thm}
+% ---
+% Oprerators
+\newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}}
+% used as " \relmiddle| " streching \mid
+\newcommand{\sforall}{{}^{\forall}}
+\newcommand{\bcs}{\ \because\ }
+\newcommand{\trf}{\ \therefore\ }
+\newcommand{\otw}{\text{otherwise}}
+\newcommand{\cst}{\text{const.}}
+\newcommand{\whr}{\text{\ where\ }}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\trans}[1]{{}^t #1}
+\newcommand{\per}[1]{#1^{\perp}}
+\newcommand{\lyama}{\langle}
+\newcommand{\ryama}{\rangle}
+\renewcommand{\bar}{\overline}
+\newcommand{\cldots}{,\ldots ,}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Res}{Res}
+\newcommand{\infint}{\int^{\infty}_{{-\infty}}}
+\newcommand{\dint}{\displaystyle{\int}}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\cal}[1]{\mathcal{#1}}
+\renewcommand{\phi}{\varphi}
+\newcommand{\lap}{\Delta}% need to fix
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\Ker}{Ker} %Physics package has this by \ker
+\renewcommand{\ker}{\Ker}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\homeo}{Homeo}
+\DeclareMathOperator{\aut}{Aut}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\map}{Map}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\catset}{\mathbf{Set}}
+\DeclareMathOperator{\nat}{\mathbf{N}}
+\DeclareMathOperator{\zah}{\mathbf{Z}}
+\DeclareMathOperator{\real}{\mathbf{R}}
+\DeclareMathOperator{\cpx}{\mathbf{C}}
+\DeclareMathOperator{\quat}{\mathbf{H}}
+\DeclareMathOperator{\kor}{\mathbf{K}}
+\DeclareMathOperator{\complex}{\mathbf{C}}
+\DeclareMathOperator{\trs}{\mathbf{T}}
+\DeclareMathOperator{\cD}{\mathcal{D}}
+\newcommand{\prr}[1]{\mathbf{P}^{#1}\mathbf{R}}
+\newcommand{\prc}[1]{\mathbf{P}^{#1}\mathbf{C}}
+\newcommand{\nin}{\not\in}
+\DeclareMathOperator{\opensub}{\underset{\text{open}}{\subset}}
+\DeclareMathOperator{\closesub}{\underset{\text{closed}}{\subset}}
+\DeclareMathOperator{\cptsub}{\underset{\text{cpt}}{\subset}}
+\newcommand{\comp}[1]{{#1}^{\mathrm{c}}} %complement
+\newcommand{\inte}[1]{{#1}^{\mathrm{o}}} %naibu interior
+\DeclareMathOperator{\defarrow}{\overset{\text{def}}{\Longleftrightarrow}}
+\DeclareMathOperator{\1to1arrow}{\overset{\text{1:1}}{\longleftrightarrow}}
+\DeclareMathOperator{\LRarrow}{\Leftrightarrow}
+\DeclareMathOperator{\leftaction}{\curvearrowright}
+\DeclareMathOperator{\rightaction}{\curvearrowleft}
+\DeclareMathOperator{\simarrow}{\overset{\sim}{\longrightarrow}}
+\DeclareMathOperator{\homeoarrow}{\overset{\approx}{\longrightarrow}}
+\newcommand{\ronarrow}[1]{\overset{#1}{\longrightarrow}}
+\newcommand{\lonarrow}[1]{\overset{#1}{\longleftarrow}}
+\newcommand{\inclusion}{\hookrightarrow}
+\DeclareMathOperator{\alev}{\ \text{a.e.}\,}
+\DeclareMathOperator{\st}{\ \text{s.t.}\, }
+\DeclareMathOperator{\ie}{\ \text{i.e.}\,}
+\newcommand{\cinf}{C^{\infty}\text{-級}\hspace{-0.3zh}}
+\newcommand{\cinff}{C^{\infty}\hspace{-0.3zh}}
+\newcommand{\cone}{C^{1}\text{-級}\hspace{-0.3zh}}
+\newcommand{\conti}[1]{C^{#1}\text{-級}\hspace{-0.3zh}}
+\newcommand{\contiwd}[2]{C^{#1}(#2)\hspace{-0.3zh}}
+\newcommand{\ccontiwd}[2]{C_{0}^{#1}(#2)\hspace{-0.3zh}}
+\newcommand{\llocwd}[2]{L_{\mathrm{loc}}^{#1}(#2)\hspace{-0.3zh}}
+\newcommand{\Lp}{L^p}
+\newcommand{\Lpwd}[2]{L^{#1} (#2)}
+\newcommand{\Lpnorm}[2]{\|#2\|_{L^{#1}}}
+\DeclareMathOperator{\loc}{loc}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\diff}{Diff}
+\DeclareMathOperator{\grad}{grad}
+\renewcommand{\div}{\mathrm{div}}
+\DeclareMathOperator{\rot}{rot}
+\DeclareMathOperator{\dvol}{dvol}
+\DeclareMathOperator{\dist}{dist}
+\newcommand{\del}{\partial}
+\newcommand{\dx}{\frac{\partial}{\partial x}}
+\newcommand{\dd}{\Delta}
+\renewcommand{\ge}{\mathfrak{g}}%\ge was used as \geq
+\DeclareMathOperator{\ha}{\mathfrak{h}}
+\DeclareMathOperator{\secx}{\mathfrak{X}}
+\DeclareMathOperator{\secxl}{\mathfrak{X}_L} % left invariant vector field
+\newcommand{\fundgrp}[1]{\pi_1{({#1})}}
+\newcommand{\pfundgrp}[2]{\pi_1({#1},{#2})}
+\DeclareMathOperator{\res}{Res}
+\newcommand{\secfund}{I \hspace{-2.5pt} I}
+\newcommand{\thrfund}{I \hspace{-2.5pt} I\hspace{-2.5pt} I}
+% Matrices
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Symm}{Symm}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Symmp}{\mathrm{Symm}_{\geq 0}}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\U}{U}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\Skew}{Skew}
+\DeclareMathOperator{\Or}{O}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\Uni}{U}
+\DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\Psl}{PSL}
+\DeclareMathOperator{\Sp}{Sp}
+% \DeclareMathOperator{}{}
+\DeclareMathOperator{\glie}{\mathfrak{gl}}
+\DeclareMathOperator{\slie}{\mathfrak{sl}}
+\DeclareMathOperator{\olie}{\mathfrak{o}}
+\DeclareMathOperator{\sulie}{\mathfrak{su}}
+% ---
+\newcommand{\Kahler}{K{\"a}hler}
+\newcommand{\Poincare}{Poincar{\'e}}
+% ---
+
+\usepackage{longtable}
+\usepackage{nccmath}
+% \usepackage[dvipdfmx]{graphicx}
+\usepackage{mleftright}
+\newcommand{\lbig}{\mleft} %parentheses
+\newcommand{\rbig}{\mright}
+\newcommand{\blvert}{\lbig\lvert}
+\newcommand{\brvert}{\rbig\rvert}
+\usepackage{bm}
+% \usepackage{mmacells}
+\usepackage[utf8]{inputenc}
+
+\lstset{%
+  language={C++},
+  basicstyle={\ttfamily\small},%
+  identifierstyle={\small},%
+  commentstyle={\small\itshape},%
+  keywordstyle={\small\bfseries},%
+  ndkeywordstyle={\small},%
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},%
+  numbers=left,%
+  xrightmargin=0zw,%
+  xleftmargin=3zw,%
+  numberstyle={\scriptsize},%
+  stepnumber=1,
+  numbersep=1zw,%
+  lineskip=-0.5ex%
+}
+
+% matirices in lines．it is better to use "pmatrix"
+\makeatletter
+\def\tpmatrix#1{
+  \setbox\z@=\vtop{\normalbaselines\m@th
+    \ialign{\hfil$##$\hfil&&\quad\hfil$##$\hfil\crcr
+      \mathstrut\crcr
+      \noalign{\kern-\baselineskip}
+      #1\crcr
+      \mathstrut\crcr
+      \noalign{\kern-\baselineskip}
+    }
+  }
+  \dimen\z@=\dp\z@
+  \setbox\z@=\vbox to \ht\z@{
+    \hbox{$\displaystyle \left(\,\vcenter{\unvbox\z@}\,\right)$}
+    \vss
+  }
+  \dp\z@=\dimen\z@
+  \box\z@
+}
+\catcode`\@=11
+\newbox\matbox
+\def\topmatrix#1{\setbox\matbox=\vtop{\normalbaselines\m@th % set the matrix in
+    \ialign{\hfil$##$\hfil&&\quad\hfil$##$\hfil\crcr    % a \vtop so the
+      \mathstrut\crcr\noalign{\kern-\baselineskip}      % first baseline
+      #1\crcr\mathstrut\crcr\noalign{\kern-\baselineskip}}} % lines up.
+  % get twice difference between baseline and centerline of inner matrix:
+  \dimen255=\dp\matbox \advance\dimen255 by -\ht\matbox
+  % Center matrix and surround with parentheses:
+  \setbox\matbox=\hbox{$\left( \,\vcenter{\box\matbox}\,\right)$}
+  % Correct for difference between baseline and centerline of parentheses:
+  \advance\dimen255 by -\dp\matbox \advance\dimen255 by \ht\matbox
+  % Lower centered matrix back to its proper baseline:
+  \lower0.5\dimen255\box\matbox
+}
+\catcode`\@=12
+\makeatother
+% ---
+% bibliography
+\begin{comment}
+  \renewenvironment{thebibliography}[1]
+  {\section*{\huge\bibname}
+    \list{\@biblabel{\@arabic\c@enumiv}}%
+    {\settowidth\labelwidth{\@biblabel{#1}}%
+      \leftmargin\labelwidth
+      \advance\leftmargin\labelsep
+      \@openbib@code
+      \usecounter{enumiv}%
+      \let\p@enumiv\@empty
+      \renewcommand\theenumiv{\@arabic\c@enumiv}\small}%
+    \sloppy
+    \clubpenalty4000
+    \@clubpenalty\clubpenalty
+    \widowpenalty4000%
+    \sfcode`\.\@m
+    \lefthyphenmin=2\righthyphenmin=2%% ハイフネーションの条件を少し緩和
+    \frenchspacing% 全体のspaceを均等に
+  }
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+    \endlist}
+  \let\@openbib@code\@empty
+  \newcommand{\bibname}{参考文献}
+\end{comment}
+% --
+\usepackage[dvipdfmx]{hyperref}% must be at the end of preemble file
+\usepackage[dvipdfmx]{pxjahyper}
+\hypersetup{
+  colorlinks=true, % リンクに色をつけない設定
+  bookmarks=true, % 以下ブックマークに関する設定
+  bookmarksnumbered=true,
+  pdfborder={0 0 0},
+  bookmarkstype=toc
+  anchorcolor=pink,        % アンカーテキストの色指定（デフォルトはblack）
+  citecolor=[HTML]{460e44},           % 参考文献リンクの色指定（デフォルトはgreen）
+  filecolor=magenta,       % ローカルファイルリンクの色指定（デフォルトはmagenta）
+  linkcolor=[HTML]{008899},        % 作成しているpdfファイルのリンクの色（デフォルトはred）
+  linkbordercolor={1 0 0}, % R G B リンクを囲むボックスの色（デフォルトは1 0 0）
+  urlcolor=Fuchsia,         % 外部参照しているurlの色（デフォルトはmagenta）
+}
+% make citation bold
+\makeatletter
+\def\@cite#1#2{[\textbf{#1\if@tempswa , #2\fi}]}
+\def\@biblabel#1{[\textbf{#1}]}
+\makeatother
+
+
+% for a map diagramicaly
+\begin{comment}
+  \begin{array}{ccc}
+    M & \stackrel{\phi}{\longrightarrow} & M' \\
+    \rotatebox{90}{$\in$} & & \rotatebox{90}{$\in$} \\
+    p & \longmapsto & \phi(p)
+  \end{array}
+\end{comment}
+% not good
+% \usepackage{emath}
+% \usepackage[dvipdfmx]{emathP}
+% \usepackage{emathZ}
+% collision macros vs emath: tr, conj
