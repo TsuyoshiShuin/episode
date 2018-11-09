@@ -1,0 +1,506 @@
+%文中に相互参照があるので2回コンパイルしてください．
+
+\documentclass[./main]{subfile}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ascmac}
+\usepackage{enumitem}
+
+\begin{document}
+\Chapter{リーマンゼータ関数について(今井)}
+
+\Section{はじめに}
+
+この記事は高校数学の数学IIIまでの知識がある人向けに書いていますが，注釈などを入れて，数学III未修者の人にも配慮しながら書いていこうと思っています．
+
+さて，数学好きの人なら知っているかもしれませんが，今年の9月，有名なイギリスの数学者アティヤ\footnote{Michael Atiyah, 1929-}がリーマン予想を証明したと発表したというニュースがありました．もちろん，まだ検証中なので，本当に証明できているかはわかりませんが，ちょうどいい機会なので，この記事ではリーマン予想に出てくるリーマンゼータ関数について書いていこうと思います．
+
+\section{総和法}
+
+皆さんは次のような式を見たことがあるでしょうか．
+\begin{equation}\label{zeta-1}
+1+2+3+4+\cdots=-\frac{1}{12}
+\end{equation}
+ラマヌジャン\footnote{Srinivasa Ramanujan, 1887-1920}のハーディ\footnote{Godfrey Harold Hardy, 1877-1947}への手紙に書いてあったことでも有名なこの式ですが，「普通に考えると」この式は正しくありません．しかし，だからといってこの式が全くのでたらめというわけではなく，きちんと意味のある式なのです．
+
+「普通に考えると」この式は正しくないと言いましたが，では「普通に考えると」とはどういうことでしょう．右辺はただの分数なので意味ははっきりしています．問題は左辺です．通常，$1+2+3+4+\cdots$と書いた場合，1に2を足して，3を足して，4を足して，$\cdots$と足す数を1ずつ大きくしながら永遠に足し算をつづけた結果を意味します．数学の記号で書くと
+\[
+\lim_{n\to\infty}\sum_{k=1}^{n}k
+\]
+となります\footnote{$\lim_{n\to a}$とは，$n$を$a$に限りなく近づけたときに，その右に書かれた式の値が近づいていく値を表し，この値を極限と呼びます．極限がある1つの有限値に定まるとき，収束するといい，それ以外の場合は，発散するといいます．この場合は発散しています．}．当然これを計算すると，
+\[
+\lim_{n\to\infty}\sum_{k=1}^{n}k=\lim_{n\to\infty}\frac{n(n+1)}{2}=+\infty
+\]
+となり，$-\frac{1}{12}$にはなりません．
+ここで，この$1+2+3+4+\cdots$のような無限に続く足し算(無限級数と呼びます)の「計算方法」として，別の方法を考えてみましょう．$1-1+1-1+\cdots$という無限級数について考えてみます．関数$f(x)$を
+\[
+f(x)=\lim_{n\to\infty}\sum_{k=0}^{n}(-x)^{k}
+\]
+と定義します．先ほどの通常の足し算の方法では，
+\[
+1-1+1-1+\cdots=\lim_{n\to\infty}\sum_{k=0}^{n}(-1)^{k}
+\]
+となるので，これは$f(x)$に$x=1$を代入したものと見なすことができます．
+\[
+\sum_{k=0}^{n}(-1)^{k}=
+\begin{cases}
+0&(n:\text{偶数})\\
+1&(n:\text{奇数})
+\end{cases}
+\]
+となるので，この定義では，$1-1+1-1+\cdots$は収束しないことになります．
+新しい方法として，$f(x)$に$x=-1$を代入するのではなく，$x=1-s\;(s>0)$を代入して，$s$を0に近づけたときの極限を$1-1+1-1+\cdots$の「計算結果」と考えることにします．つまり，
+\[
+1-1+1-1+\cdots=\lim_{s\to +0}f(1-s)
+\]
+と定義するのです\footnote{$s\to +0$とは，sを正の側から0に近づけるということです．}．この定義で$1-1+1-1+\cdots$を計算してみましょう．$-1<x<1$のとき，
+\[
+f(x)=\lim_{n\to\infty}\{1+(-x)+(-x)^2+\cdots+(-x)^n\}=\lim_{n\to\infty}\frac{1-(-x)^{n+1}}{1-(-x)}=\frac{1}{1+x}
+\]
+なので，
+\[
+1-1+1-1+\cdots=\lim_{s\to +0}f(1-s)=\lim_{s\to +0}\frac{1}{1+(1-s)}=\frac{1}{2}
+\]
+となります．この無限級数の「計算方法」をアーベル総和法(Abel summation)と言い，この「計算結果」をアーベル和(Abel sum)といいます．
+
+一般的な形で書くと，次のようになります．
+\begin{itembox}[l]{アーベル総和法}
+無限級数$a_0+a_1+a_2+a_3+\cdots$に対し，$0<x<1$において$\lim_{n\to\infty}\sum_{k=0}^na_kx^k$が収束し\footnotemark{}，
+\[
+\lim_{s\to+0}\left\{\lim_{n\to\infty}\sum_{k=0}^na_k(1-s)^k\right\}
+\]
+が収束するとき，その値をアーベル和という．
+\end{itembox}
+\addtocounter{footnote}{-1}
+\stepcounter{footnote}\footnotetext{つまり，$0<r<1$を満たす全ての実数$r$に対し，$\lim_{n\to\infty}\sum_{k=0}^na_kr^k$が収束するということ．}
+
+ここまで無限級数とその通常の計算方法での和も，無限級数とそのアーベル和も等号で結んできましたが，これでは紛らわしいので，無限級数$I$に対して，$I$の通常の計算方法での和を$S(I)$，$I$のアーベル和を$A(I)$と書くことにします．つまり，
+\[
+S(1+2+3+4+\cdots)=\infty,\;A(1-1+1-1+\cdots)=\frac{1}{2}
+\]
+のように書きます\footnote{この記事ではアーベル和を直感的に理解しやすいように無限級数とそのアーベル和を等号で結んだりしましたが，通常は$a_0+a_1+a_2+a_3+\cdots=b$と書いたら$\lim_{n\to\infty}\sum_{k=0}^na_k=b$ (つまり，$S(a_0+a_1+a_2+a_3+\cdots)=b$ )という意味です．その意味では(\ref{zeta-1})式は間違っています．}．
+
+ここまで読んで，そんな勝手に計算方法を変えたものにアーベル「和」などと名前を付けてもいいのか，と思った読者の方もいるかもしれませんが，実は，無限級数が通常の計算方法で収束するとき，アーベル和が定義できて同じ値になるのです(証明は高校数学の範囲を超えてしまうので省略します\footnote{証明はアーベルの連続性定理，またはAbel's theorem on power seriesで検索すれば出てくると思います．})．\vspace{1\baselineskip}\\
+問1．次の無限級数$I$に対し$S(I)=A(I)$であることを示せ．\\
+ただし，$0<|x|<1$で$\lim_{n\to\infty}\sum_{k=0}^n\frac{x^k}{k+1}=\frac{\log(1-x)}{x}$であることを用いてよい．
+\begin{enumerate}[label=(\arabic*)]
+\item $I:1+1+\frac{3}{4}+\frac{1}{2}+\cdots+\frac{k}{2^k}+\cdots$
+\item $I:1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+\cdots+\frac{(-1)^k}{k}+\cdots$
+\end{enumerate}\vspace{1\baselineskip}
+
+アーベル総和法の他にも様々な総和法があります．ここでは定義だけ紹介しておきます．
+\begin{itembox}[l]{チェザロ\footnotemark{}総和法(Ces\`aro summation)}
+無限級数$a_0+a_1+a_2+a_3+\cdots$に対し，
+\[
+\lim_{n\to\infty}\frac{1}{n+1}\sum_{m=0}^n\left\{\sum_{k=0}^ma_k\right\}
+\]
+が収束するとき，その値をチェザロ和(Ces\`aro sum)という．
+\end{itembox}
+\addtocounter{footnote}{-1}
+\stepcounter{footnote}\footnotetext{Ernesto Ces\`aro,1859-1906}
+\begin{itembox}[l]{オイラー\footnotemark{}総和法(Euler summation)}
+無限級数$a_0+a_1+a_2+a_3+\cdots$に対し，
+\[
+\lim_{n\to\infty}\sum_{m=0}^n\left\{\frac{1}{2^{m+1}}\sum_{k=0}^m{}_m\mathrm{C}_ka_k\right\}
+\]
+が収束するとき，その値をオイラー和(Euler sum)という．
+\end{itembox}
+\addtocounter{footnote}{-1}
+\stepcounter{footnote}\footnotetext{Leonhard Euler, 1707-1783}
+
+ただこれらの総和法でも，$1+2+3+4+\cdots$を$-\frac{1}{12}$にはできません．どれを使っても発散してしまいます．では(\ref{zeta-1})式はどうすれば出てくるのでしょう．実は，アーベル総和法と似たような考え方でできるのですが，それを説明するのにはまだもう少し準備が必要なのです．
+
+\section{ガンマ関数}
+
+突然ですが，次の漸化式で表される数列$\{a_n\}$の一般項は何でしょう．
+\[
+a_0=1,\;a_{n+1}=(n+1)a_n
+\]
+これは簡単だと思います．答えは$a_n=n!$です．では，
+\begin{equation}\label{gamma1}
+g(0)=1,\;g(z+1)=(z+1)\cdot g(z)
+\end{equation}
+を満たすような性質の良い(ほとんどすべての点で微分可能\footnote{正確には，微分可能ではない点の集合が集積点を持たない，となります．直感的にはそういう点が密集しているところがないということです．「性質の良い」と書きましたが，このような性質を持つ複素関数のことを有理形関数(meromorphic function)といいます．})複素関数\footnote{定義域が複素数全体で，数を代入した時の値が複素数になるような関数のこと．高校の範囲では基本的に定義域も値域も実数の範囲内の関数しか扱わないが，とりあえずこの記事では複素数を代入できるように拡張したと思っておけばよいです．}$g$は存在するのでしょうか，そして，存在するとしたらそれはどのような形をしているのでしょう．この章ではそのような関数について考えていきたいと思います．
+
+(\ref{gamma1})を満たすような性質の良い複素関数$g$が存在すると仮定します．$h(z)=\frac{1}{g(z)}$とおきます．すると，$h$は
+\begin{equation}\label{invg}
+h(0)=1,\;h(z)=(z+1)\cdot h(z+1)
+\end{equation}
+を満たすので，$n$が正の整数のとき，
+\begin{align*}
+h(-n)=&(-n+1)\cdot h(-n+1)\\
+=&(-n+1)(-n+2)\cdot h(-n+2)\\
+=&\cdots\\
+=&(-1)^{n-1}(n-1)!\cdot h(-1)\\
+=&(-1)^{n-1}(n-1)!\cdot0\cdot h(0)=0
+\end{align*}
+となります．つまり，$z$が負の整数のとき，$h(z)=0$となります．さらに$h(z)$の零点($h(z)=0$を満たす$z$のこと)がこれ以外にないと仮定します．実は，零点が負の整数のみであるようなほとんどすべての点で微分可能な関数は
+\[
+C\exp(f(z))\prod_{n=1}^{\infty}\left\{\left(1+\frac{z}{n}\right)^{m_n}\exp\left(\sum_{k=1}^l\frac{z^k}{k(-n)^k}\right)\right\}
+\]
+(ただし，$C$は複素数，$m_n,l$は正の整数，$f(z)$は複素数平面上すべての点で微分可能な複素関数，$\prod$は$\sum$の積バージョン\footnote{$\prod_{n=1}^{\infty}$は$\lim_{N\to\infty}\prod_{n=1}^N$という意味．$\sum$でも同様の書き方をします．}，$\exp(w)=e^w$，$e$は自然対数の底\footnote{$e=\lim_{n\to\infty}\left(1+\frac{1}{n}\right)^n\fallingdotseq 2.7183$})\footnote{$e^w$という形を見て，実数を複素数乗することができるのかと思った人もいるかもしれません．実は，$x$が実数のとき，$e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!}$という式が成り立つので，$e^w$とは，この右辺を使って，$e^w=sum_{n=0}^{\infty}\frac{w^n}{n!}$と定義したものです．後で出てきますが，正の実数$t$に対して$t^w$も$t^w=e^{w\log t}$として定義されます．}\\
+の形にかけることがわかっています\footnote{この右辺を$h(z)$の積表示といいます．}．このような関数の中で一番簡単な形のもの，つまりすべての$n$に対し$m_n=1$で，$l=C=1$，すべての複素数$z$で$f(z)=0$のときのものを$H(z)$とします．すると
+\[
+H(z)=\prod_{n=1}^{\infty}\left\{\left(1+\frac{z}{n}\right)e^{\frac{-z}{n}}\right\}
+\]
+となり，しかも
+\[
+H(0)=\prod_{n=1}^{\infty}\left\{(1+0)e^0\right\}=1
+\]
+です．さらに，ここでは証明はしませんが，$\prod_{n=1}^{\infty}\left\{\left(1+\frac{z}{n}\right)e^{\frac{-z}{n}}\right\}$は積の順番を変えても同じ値に収束するということが示せる\footnote{無限積$\prod_{n=1}^{\infty}p_n$に対し，$\sum_{n=1}^{\infty}|\log p_n|$が収束するとき，$\prod_{n=1}^{\infty}p_n$は絶対収束するといいます．絶対収束ならば順番を変えても同じ値に収束することが言えるので，絶対収束することを示せばよいです．}ので，
+\begin{align*}
+\frac{H(z)}{H(z+1)}=&\frac{\prod_{n=1}^{\infty}\left\{\left(1+\frac{z}{n}\right)e^{\frac{-z}{n}}\right\}}{\prod_{n=1}^{\infty}\left\{\left(1+\frac{z+1}{n}\right)e^{\frac{-z-1}{n}}\right\}}\\
+=&\prod_{n=1}^{\infty}\frac{\left(\frac{z+n}{n}\right)e^{\frac{-z}{n}}}{\left(\frac{z+n+1}{n}\right)e^{\frac{-z-1}{n}}}\\
+=&\prod_{n=1}^{\infty}\left\{\left(\frac{z+n}{z+n+1}\right)e^{\frac{1}{n}}\right\}\\
+=&\lim_{N\to\infty}\prod_{n=1}^{N}\left\{\left(\frac{z+n}{z+n+1}\right)e^{\frac{1}{n}}\right\}\\
+=&\lim_{N\to\infty}\left\{\left(\frac{z+1}{z+N+1}\right)\exp\left(\sum_{n=1}^N{\frac{1}{n}}\right)\right\}\\
+=&\lim_{N\to\infty}(z+1)\left(\frac{N}{z+N+1}\right)\exp\left(-\log N+\sum_{n=1}^N\frac{1}{n}\right)\\
+=&(z+1)\cdot 1\cdot e^{\gamma}=e^{\gamma}(z+1)
+\end{align*}
+(ただし，$\gamma=\lim_{n\to\infty}\{-\log N+\sum_{n=1}^N(1/n)\}\fallingdotseq 0.57722$，この$\gamma$はオイラーの定数と呼ばれる．)\\
+となるので，$h(z)=e^{\gamma z}H(z)$とすれば，$h(z)$は(\ref{invg})の条件を満たします．よって，
+\[
+h(z)=e^{\gamma z}\prod_{n=1}^{\infty}\left\{\left(1+\frac{z}{n}\right)e^{\frac{-z}{n}}\right\},\;g(z)=e^{-\gamma z}\prod_{n=1}^{\infty}\left\{\left(\frac{n}{z+n}\right)e^{\frac{z}{n}}\right\}
+\]
+
+これで，$g(z)$が求まりました．実際に現在，階乗を一般化した関数として，広く用いられている関数は，オイラーのガンマ関数$\Gamma(z)$ですが，これは$\Gamma(z)=g(z-1)$であり，今求めた$g$を1だけずらしたものとなっています．しかし，実際にオイラーが考えた階乗を一般化したときはこのようなずれはなく，ルジャンドル\footnote{Adrien Marie Legendre, 1752-1833}が現在の記号$\Gamma(z)$と1だけずれた定義を使い始めたようです．
+
+さて，ガンマ関数は求まったものの，無限積の形では扱いづらいので，他の形にできないか考えてみます．天下り的ですが，$\operatorname{Re}(z)>0$，$n$は正の整数として，次のような積分計算を考えてみましょう．\footnote{この積分計算は数学III未修者の人には何をやってるかわからないかもしれませんが，説明すると長くなってしまうので，こういう式が成り立つんだな，程度で読み飛ばしていただいて結構です．}
+\begin{align*}
+\int_0^1s^n(1-s)^{z-1}\;ds=&\int_0^1s^n\left\{\frac{-(1-s)^z}{z}\right\}'\;ds\\
+=&\left[\frac{-s^n(1-s)^z}{z}\right]_0^1-\int_0^1(s^n)'\left\{\frac{-(1-s)^z}{z}\right\}\;ds\\
+=&0-\int_0^1(s^n)'\left\{\frac{-(1-s)^z}{z}\right\}\;ds\\
+=&\frac{n}{z}\int_0^1s^{n-1}(1-s)^z\;ds
+\end{align*}
+これを繰り返すと，
+\begin{align*}
+\int_0^1s^n(1-s)^{z-1}\;ds=&\frac{n(n-1)(n-2)\cdots 2\cdot 1}{z(z+1)(z+2)\cdots (z+n-2)(z+n-1)}\int_0^1(1-s)^{z+n-1}\;ds\\
+=&\frac{n(n-1)(n-2)\cdots 2\cdot 1}{z(z+1)(z+2)\cdots (z+n-2)(z+n-1)}\cdot\frac{1}{z+n}\\
+=&\frac{1\cdot 2\cdot 3\cdots (n-1)n}{z(z+1)(z+2)\cdots (z+n-1)(z+n)}\\
+=&\frac{1}{z}\prod_{k=1}^{n}\left(\frac{k}{z+k}\right)
+\end{align*}
+一方，
+\begin{align*}
+g(z)=&e^{-\gamma z}\prod_{n=1}^{\infty}\left\{\left(\frac{n}{z+n}\right)e^{\frac{z}{n}}\right\}\\
+=&\lim_{N\to\infty}\left\{\left(\prod_{n=1}^N\frac{n}{z+n}\right)\exp\left(\left(\log N-\sum_{n=1}^N\frac{1}{n}\right)z+\sum_{n=1}^N\frac{z}{n}\right)\right\}\\
+=&\lim_{N\to\infty}\left\{\left(\prod_{n=1}^N\frac{n}{z+n}\right)\exp(z\log N)\right\}\\
+=&\lim_{N\to\infty}\left\{\left(\prod_{n=1}^N\frac{n}{z+n}\right)N^z\right\}
+\end{align*}
+なので，上の積分計算の結果より，
+\begin{align*}
+g(z)=&\lim_{N\to\infty}\left\{\left(z\int_0^1s^N(1-s)^{z-1}\;ds\right)N^z\right\}\\
+=&\lim_{N\to\infty}\left(z\int_0^1s^N\{N(1-s)\}^{z-1}N\;ds\right)
+\end{align*}
+$t=N(1-s)$と置換すると，$-dt=N\;ds$より，
+\begin{align*}
+g(z)=\lim_{N\to\infty}\left(z\int_0^N\left(1-\frac{t}{N}\right)^Nt^{z-1}\;dt\right)
+\end{align*}
+ここで，$0\leq y\geq 1$において$e^{y}\geq 1+y,\;e^{-y}\geq 1-y$なので，$y=\frac{t}{N}$を代入して
+\[
+\left(1+\frac{t}{N}\right)\leq e^{\frac{t}{N}}\leq \left(1-\frac{t}{N}\right)^{-1}
+\]
+\[
+\left(1-\frac{t}{N}\right)^N\leq e^{-t}\leq \left(1+\frac{t}{N}\right)^{-N}
+\]
+\begin{align*}
+0\leq e^{-t}-\left(1-\frac{t}{N}\right)^N\leq&e^{-t}-\frac{e^{-t}}{\left(1-\frac{t}{N}\right)^N}\left(1-\frac{t}{N}\right)^N\\
+=&e^{-t}\left\{1-\left(1-\frac{t^2}{N^2}\right)^N\right\}\\
+=&e^{-t}\left\{1-\left(1-\frac{t^2}{N^2}\right)\right\}\left\{\sum_{k=0}^N\left(1-\frac{t^2}{N^2}\right)^k\right\}\\
+\leq &e^{-t}\left(\frac{t^2}{N^2}\right)\cdot N=e^{-t}t^2N^{-1}
+\end{align*}
+となります．これは高校数学の範囲を超えてしまいますが，$|t^{z}|=|e^{z\log t}|=e^{\operatorname{Re}(z)\log t}=t^{\operatorname{Re}(z)}$が成り立つことがオイラーの公式からわかる\footnote{$x,y$が実数のとき，$e^{iy}=\cos y+i\sin y$の両辺の絶対値を取って，$|e^{iy}|=1$となるので，$|e^{x+iy}|=e^x$}ので，これを使うと，
+\begin{align*}
+\left|\int_0^N\left\{e^{-t}-\left(1-\frac{t}{N}\right)^N\right\}t^{z-1}\;dt\right|\leq&\left|\int_0^Ne^{-t}t^{z+1}N^{-1}\;dt\right|\\
+\leq&\int_0^Ne^{-t}\left|t^{z+1}\right|N^{-1}\;dt\\
+\leq&N^{-1}\int_0^Ne^{-t}t^{\operatorname{Re}(z)+1}\;dt
+\end{align*}
+
+ここで，十分大きなある実数$T$を取ると，
+\[
+t>T\Rightarrow e^{\frac{t}{2}}>t^{\operatorname{Re}(z)+1}
+\]
+となるので，$N>T$において
+\begin{align*}
+\int_0^Ne^{-t}t^{\operatorname{Re}(z)+1}\;dt\leq&\int_0^Te^{-t}t^{\operatorname{Re}(z)+1}\;dt+\int_0^Ne^{\frac{-t}{2}}\;dt\\
+=&\int_0^Te^{-t}t^{\operatorname{Re}(z)+1}\;dt+2(e^{\frac{-T}{2}}-e^{\frac{-N}{2}})
+\end{align*}
+となります．最右辺は$N\to\infty$とすると有限値に収束するので，この値を$\tau$とおくと，
+\[
+0\leq\lim_{N\to\infty}\left|\int_0^N\left\{e^{-t}-\left(1-\frac{t}{N}\right)^N\right\}t^{z-1}\;dt\right|\leq\lim_{N\to\infty}N^{-1}\tau=0
+\]
+はさみうちの原理\footnote{十分大きい$n$で$a_n<c_n<b_n$かつ$\lim_{n\to\infty}a_n=\lim_{n\to\infty}b_n=r$なら，$\lim_{n\to\infty}c_n=r$という原理．}より，
+\[
+\lim_{N\to\infty}\left|\int_0^N\left\{e^{-t}-\left(1-\frac{t}{N}\right)^N\right\}t^{z-1}\;dt\right|=0
+\]
+\[
+\lim_{N\to\infty}\left[\int_0^N\left\{e^{-t}-\left(1-\frac{t}{N}\right)^N\right\}t^{z-1}\;dt\right]=0
+\]
+\[
+\lim_{N\to\infty}\left(\int_0^Ne^{-t}t^{z-1}\;dt\right)=\lim_{N\to\infty}\left\{\int_0^N\left(1-\frac{t}{N}\right)^Nt^{z-1}\;dt\right\}
+\]
+よって，
+\[
+g(z)=z\lim_{N\to\infty}\left(\int_0^Ne^{-t}t^{z-1}\;dt\right)
+\]
+$\sum,\prod$のときと同様に$\lim_{N\to\infty}\int_0^N$はまとめて
+\[
+g(z)=z\int_0^{\infty}e^{-t}t^{z-1}\;dt
+\]
+と書いてもよいです．$\Gamma(z)=g(z-1)=\frac{g(z)}{z}$だったので，
+\[
+\Gamma(z)=\int_0^{\infty}e^{-t}t^{z-1}\;dt
+\]
+ただし，初めにつけた仮定があるので，この式は$\operatorname{Re}(z)>0$でしか成り立ちません．
+\vspace{\baselineskip}\\
+
+次に，オイラーの相反公式(Euler's reflection formula)と呼ばれる下の公式を証明したいと思います．
+\begin{equation}\label{ERF}
+\Gamma(z)\Gamma(1-z)=\frac{\pi}{\sin (\pi z)}
+\end{equation}
+
+$\sin(\pi z)$を無限積で書くと，
+\begin{align*}
+\sin(\pi z)=&\pi z\prod_{n=-\infty}^{-1}\left\{\left(1+\frac{z}{n}\right)e^{\frac{-z}{n}}\right\}\prod_{n=1}^{\infty}\left\{\left(1+\frac{z}{n}\right)e^{\frac{-z}{n}}\right\}\\
+=&\pi z\prod_{n=1}^{\infty}\left\{\left(1+\frac{z}{n}\right)e^{\frac{-z}{n}}\left(1-\frac{z}{n}\right)e^{\frac{z}{n}}\right\}\\
+=&\pi z\prod_{n=1}^{\infty}\left(1-\frac{z^2}{n^2}\right)
+\end{align*}
+となります．一方，
+\begin{align*}
+&h(z)h(-z)\\
+=&\left[e^{\gamma z}\prod_{n=1}^{\infty}\left\{\left(1+\frac{z}{n}\right)e^{\frac{-z}{n}}\right\}\right]\left[e^{-\gamma z}\prod_{n=1}^{\infty}\left\{\left(1-\frac{z}{n}\right)e^{\frac{z}{n}}\right\}\right]\\
+=&\prod_{n=1}^{\infty}\left(1-\frac{z^2}{n^2}\right)
+\end{align*}
+なので，$\sin(\pi z)=\pi z\cdot h(z)h(-z)$となります．ここで，$\Gamma(z)=\frac{1}{h(z-1)}$より，
+\[
+\Gamma(z)\Gamma(1-z)=\frac{1}{h(z-1)h(-z)}=\frac{1}{z\cdot h(z)h(-z)}=\frac{\pi}{\sin(\pi z)}
+\]
+となり，オイラーの相反公式が示されました．
+\vspace{\baselineskip}\\
+
+最後に，ルジャンドルの2倍公式(Legendre's duplication formula)と呼ばれる下の公式を証明したいと思います．
+\begin{equation}\label{LDF}
+\sqrt{\pi}\cdot\Gamma(2z)=2^{2z-1}\Gamma(z)\Gamma\left(z+\frac{1}{2}\right)
+\end{equation}
+
+ガンマ関数を無限積で書くと，
+\[
+\Gamma(z)=\frac{e^{-\gamma z}}{z}\prod_{n=1}^{\infty}\left\{\left(\frac{n}{z+n}\right)e^{\frac{z}{n}}\right\}
+\]
+で，無限積の部分は$\frac{1}{H(z)}$となっているので，無限積の部分は積の順番を変えても同じ値に収束することに注意すると，
+\begin{align*}
+&\Gamma(z)\Gamma\left(z+\frac{1}{2}\right)\\
+=&\left[\frac{e^{-\gamma z}}{z}\prod_{n=1}^{\infty}\left\{\left(\frac{n}{z+n}\right)e^{\frac{z}{n}}\right\}\right]\left[\frac{e^{-\gamma \left(z+\frac{1}{2}\right)}}{z+\frac{1}{2}}\prod_{n=1}^{\infty}\left\{\left(\frac{n}{z+\frac{1}{2}+n}\right)e^{\frac{z+\frac{1}{2}}{n}}\right\}\right]\\
+=&\frac{e^{-\gamma \left(2z+\frac{1}{2}\right)}}{z\left(z+\frac{1}{2}\right)}\prod_{n=1}^{\infty}\left\{\left(\frac{2n}{2z+2n}\right)e^{\frac{2z}{2n}}\right\}\\
+&\cdot\prod_{n=1}^{\infty}\left\{\left(\frac{2n+1}{2z+2n+1}\right)e^{\frac{2z}{2n+1}}\left(\frac{2n}{2n+1}\right)e^{\frac{1}{2n}}e^{\frac{2z}{2n(2n+1)}}\right\}
+\end{align*}
+一方，
+\begin{align*}
+&\Gamma\left(\frac{1}{2}\right)\Gamma(2z)\\
+=&\left[\frac{e^{-\frac{\gamma}{2}}}{\frac{1}{2}}\prod_{n=1}^{\infty}\left\{\left(\frac{n}{\frac{1}{2}+n}\right)e^{\frac{\frac{1}{2}}{n}}\right\}\right]\left[\frac{e^{-2\gamma z}}{2z}\prod_{n=1}^{\infty}\left\{\left(\frac{n}{2z+n}\right)e^{\frac{2z}{n}}\right\}\right]\\
+=&\frac{e^{-\gamma \left(2z+\frac{1}{2}\right)}}{z}\prod_{n=1}^{\infty}\left\{\left(\frac{2n}{2n+1}\right)e^{\frac{1}{2n}}\right\}\prod_{n=1}^{\infty}\left\{\left(\frac{n}{2z+n}\right)e^{\frac{2z}{n}}\right\}
+\end{align*}
+ここで，奇数番目の項と偶数番目の項に分けることで，
+\[
+\prod_{n=1}^{\infty}\left\{\left(\frac{n}{2z+n}\right)e^{\frac{2z}{n}}\right\}=\frac{e^{2z}}{2z+1}\prod_{n=1}^{\infty}\left\{\left(\frac{2n}{2z+2n}\right)e^{\frac{2z}{2n}}\right\}\prod_{n=1}^{\infty}\left\{\left(\frac{2n+1}{2z+2n+1}\right)e^{\frac{2z}{2n+1}}\right\}
+\]
+また，
+\[
+\sum_{n=1}^{\infty}\frac{1}{2n(2n+1)}=1-\log 2
+\]
+より，
+\[
+\prod_{n=1}^{\infty}e^{\frac{2z}{2n(2n+1)}}=\left(\frac{e}{2}\right)^{2z}
+\]
+で，この無限積も順番を変えても同じ値に収束します．
+よって，
+\begin{align*}
+&\left(\frac{e}{2}\right)^{2z}\Gamma\left(\frac{1}{2}\right)\Gamma(2z)\\
+=&\frac{e^{-\gamma \left(2z+\frac{1}{2}\right)+2z}}{z(2z+1)}\prod_{n=1}^{\infty}\left\{\left(\frac{2n}{2n+1}\right)e^{\frac{1}{2n}}\right\}\prod_{n=1}^{\infty}\left\{\left(\frac{2n}{2z+2n}\right)e^{\frac{2z}{2n}}\right\}\\
+&\cdot\prod_{n=1}^{\infty}\left\{\left(\frac{2n+1}{2z+2n+1}\right)e^{\frac{2z}{2n+1}}\right\}\prod_{n=1}^{\infty}e^{\frac{2z}{2n(2n+1)}}\\
+=&\frac{e^{-\gamma \left(2z+\frac{1}{2}\right)+2z}}{z(2z+1)}\prod_{n=1}^{\infty}\left\{\left(\frac{2n}{2z+2n}\right)e^{\frac{2z}{2n}}\right\}\\
+&\cdot\prod_{n=1}^{\infty}\left\{\left(\frac{2n+1}{2z+2n+1}\right)e^{\frac{2z}{2n+1}}\left(\frac{2n}{2n+1}\right)e^{\frac{1}{2n}}e^{\frac{2z}{2n(2n+1)}}\right\}\\
+=&\frac{e^{2z}}{2}\Gamma(z)\Gamma\left(z+\frac{1}{2}\right)
+\end{align*}
+となりますが，(\ref{ERF})式に$s=\frac{1}{2}$を代入すると，$\left(\Gamma\left(\frac{1}{2}\right)\right)^2=\pi$がわかり，$\Gamma\left(\frac{1}{2}\right)=2\Gamma\left(\frac{3}{2}\right)>0$なので，$\Gamma\left(\frac{1}{2}\right)=\sqrt{\pi}$となり，ルジャンドルの2倍公式が示されました．
+
+\section{リーマンゼータ関数}
+
+さて，いよいよ(\ref{zeta-1})式がどういう意味なのか解明していきたいと思います．アーベル総和法では，$a_0+a_1+a_2+a_3+\cdots$という無限級数に対して，$f(x)=\sum_{n=0}^{\infty}a_nx^n$という関数を考えましたが，今回は，無限級数$1+2+3+4+\cdots$に対して$Z(s)=\sum_{n=1}^{\infty}n^{-s}$という複素関数を考えてみます．まず，この右辺が$\operatorname{Re}(s)>1$で収束することを示したいと思います．初めに，$s$が1より大きい実数のときに示します．$n-1\leq t\leq n$において$n^{-s}\leq t^{-s}$なので，
+\[
+n^{-s}=\int_{n-1}^nn^{-s}\;dt\leq\int_{n-1}^nt^{-s}\;dt
+\]
+\begin{align*}
+\sum_{n=1}^{N}n^{-s}=&1+\sum_{n=2}^{N}n^{-s}\\
+\leq&1+\sum_{n=2}^{N}\left(\int_{n-1}^nt^{-s}\;dt\right)\\
+=&1+\left(\int_1^{N}t^{-s}\;dt\right)\\
+=&1+\left[\frac{t^{-s+1}}{-s+1}\right]_1^{N}\\
+=&1+\frac{1-N^{-s+1}}{s-1}\leq\frac{s}{s-1}
+\end{align*}
+となり，数列$\left\{\sum_{k=1}^nk^{-s}\right\}$は単調増加だが上限がある\footnote{数学用語では上に有界であるといいます．}のでこの数列の極限である$\sum_{n=1}^{\infty}n^{-s}$は収束します．
+
+次に$s$が実数でないときについて示します．$s=\sigma +it$ (ただし，$\sigma,t$は実数，$\sigma>1,\;t\neq 0$)とします．前節で出てきたように，$|n^{-s}|=n^{-\operatorname{Re}(s)}$なので，$N$より大きい任意の整数$M$に対し，
+\[
+0<\left|\sum_{n=N+1}^{M}n^{-s}\right|\leq\sum_{n=N+1}^{M}\left|n^{-s}\right|=\sum_{n=N+1}^{M}n^{-\sigma}\leq\sum_{n=N+1}^{\infty}n^{-\sigma}=Z(\sigma)-\sum_{n=1}^{N}n^{-\sigma}
+\]
+が成り立つので，$r_N=Z(\sigma)-\sum_{n=1}^{N}n^{-\sigma}$とおくと，数列${a_n}=\left\{\sum_{k=1}^nk^{-s}\right\}$の値を複素数平面にプロットすると，$a_N$以降の点はすべて，$a_N$を中心とした半径$r_N$の円($C_N$とする)の内部および周のどこかにある．$|a_{N+1}-a_N|+r_{N+1}=r_N$より，$C_{N+1}$は$C_N$に内側から接していて，$\lim_{N\to\infty}r_N=0$なので，$\sum_{n=1}^{\infty}n^{-s}$は収束します\footnote{高校数学の範囲ではそもそもまだ極限を厳密な形で定義していないので感覚的な議論になってしまっていますが，理系の学生が大学1年生で習う$\epsilon-\delta$論法を使えばこの証明もちゃんと数式化できます．}．
+
+$\sum_{n=1}^{\infty}n^{-s}$は$\operatorname{Re}(s)>1$でないときには収束するとは限りません．たとえば$s=\frac{1}{2}$とすれば
+\[
+\sum_{n=1}^{\infty}\frac{1}{\sqrt{n}}=+\infty
+\]
+となってしまいます．
+
+一方，前節のガンマ関数の積分による表示を思い出すと，
+\[
+\Gamma(z)=\int_0^{\infty}e^{-t}t^{z-1}\;dt
+\]
+これに$z=\frac{s}{2}$を代入し，$n^{-s}\pi^{-\frac{s}{2}}$を掛けて$x=\frac{t}{n^2\pi}$で置換すると，
+\begin{align*}
+n^{-s}\pi^{-\frac{s}{2}}\Gamma\left(\frac{s}{2}\right)=&\int_0^{\infty}e^{-t}\left(\frac{t}{n^2\pi}\right)^{\frac{s}{2}-1}\frac{1}{n^2\pi}\;dt\\
+=&\int_0^{\infty}e^{-n^2\pi x}x^{\frac{s}{2}-1}\;dx
+\end{align*}
+ここで，$\psi(x)=\sum_{n=1}^{\infty}e^{-n^2\pi x}$とおくと，
+\begin{align*}
+\pi^{-\frac{s}{2}}Z(s)\Gamma\left(\frac{s}{2}\right)=&\int_0^{\infty}\psi(x)x^{\frac{s}{2}-1}\;dx\\
+=&\int_0^1\psi(x)x^{\frac{s}{2}-1}\;dx+\int_1^{\infty}\psi(x)x^{\frac{s}{2}-1}\;dx
+\end{align*}
+となります\footnote{積分と無限和の交換は無条件では行ってはいけませんが，ここでは数学科の3年生の解析学の授業でやる項別積分定理という定理から交換してもよいことがわかります．}．ここで，
+\[
+\sum_{n=-\infty}^{\infty}e^{-(y+2n\pi)^2\frac{x}{4\pi}}=\frac{1}{\sqrt{x}}\sum_{k=-\infty}^{\infty}e^{-k^2\pi\frac{1}{x}+iky}
+\]
+という関係式が成り立つ\footnote{左辺を$y$の関数とみて，この関数をフーリエ級数展開(これも数学科の3年生の解析学の授業で習います)すると右辺になります．}ので，これに$y=0$を代入すると，
+\[
+\sum_{n=-\infty}^{\infty}e^{-n^2\pi x}=\frac{1}{\sqrt{x}}\sum_{k=-\infty}^{\infty}e^{-k^2\pi\frac{1}{x}}
+\]
+\[
+1+2\sum_{n=1}^{\infty}e^{-n^2\pi x}=\frac{1}{\sqrt{x}}\left(1+2\sum_{k=1}^{\infty}e^{-k^2\pi\frac{1}{x}}\right)
+\]
+\[
+2\psi(x)+1=\frac{1}{\sqrt{x}}\left(2\psi\left(\frac{1}{x}\right)+1\right)
+\]
+\[
+\psi\left(\frac{1}{x}\right)=\sqrt{x}\psi(x)+\frac{\sqrt{x}}{2}-\frac{1}{2}
+\]
+となるので，積分区間が0から1までの方の積分で$x=\frac{1}{y}$と置換すると，
+\begin{align*}
+\int_0^1\psi(x)x^{\frac{s}{2}-1}\;dx=&\int_{\infty}^1\psi\left(\frac{1}{y}\right)y^{1-\frac{s}{2}}\left(-\frac{1}{y^2}\right)\;dy\\
+=&\int_1^{\infty}\psi\left(\frac{1}{y}\right)y^{\frac{-s}{2}-1}\;dy\\
+=&\int_1^{\infty}\left(\sqrt{y}\psi(y)+\frac{\sqrt{y}}{2}-\frac{1}{2}\right)y^{\frac{-s}{2}-1}\;dy\\
+=&\int_1^{\infty}\psi(y)y^{\frac{1-s}{2}-1}\;dy+\frac{1}{2}\int_1^{\infty}\left(y^{\frac{1-s}{2}-1}-y^{\frac{-s}{2}-1}\right)\;dy\\
+=&\int_1^{\infty}\psi(y)y^{\frac{1-s}{2}-1}\;dy+\frac{1}{2}\left[\frac{2y^{\frac{1-s}{2}}}{1-s}+\frac{2y^{\frac{-s}{2}}}{s}\right]_1^{\infty}\\
+=&\int_1^{\infty}\psi(x)x^{\frac{1-s}{2}-1}\;dx-\frac{1}{1-s}-\frac{1}{s}
+\end{align*}
+最後の行の第1項では積分の変数を表す文字を$y$から$x$に変えただけで，変数変換などは行っていません．また最後の行の第2項以降は，$\operatorname{Re}(s)>1$なので，$\lim_{y\to\infty}y^{\frac{-s}{2}}=0,\;\lim_{y\to\infty}y^{\frac{1-s}{2}}=0$となっているためこうなっています．よって，
+\begin{equation}\label{zetaprop}
+\pi^{-\frac{s}{2}}Z(s)\Gamma\left(\frac{s}{2}\right)=\int_1^{\infty}\psi(x)\left(x^{\frac{s}{2}-1}+x^{\frac{1-s}{2}-1}\right)\;dx-\frac{1}{s(1-s)}
+\end{equation}
+右辺の積分は複素数平面全体で収束するので，
+\[
+\zeta(s)=\frac{\pi^{\frac{s}{2}}}{\Gamma\left(\frac{s}{2}\right)}\left\{\int_1^{\infty}\psi(x)\left(x^{\frac{s}{2}-1}+x^{\frac{1-s}{2}-1}\right)\;dx-\frac{1}{s(1-s)}\right\}
+\]
+とおくと，$\operatorname{Re}(s)>1$では$Z(s)=\zeta(s)$を満たす，性質の良い複素関数が定義できます．この$\zeta(s)$がこの記事のタイトルにもなっているリーマン\footnote{Georg Friedrich Bernhard Riemann, 1826-1866}ゼータ関数(Riemann zeta function)\footnote{この関数はリーマンよりも前にオイラーも研究していましたが，この関数の様々な重要な性質を発見したのはリーマンであるため，リーマンゼータ関数と呼ばれています．}です．
+
+さて，(\ref{zetaprop})式の右辺は$s$を$1-s$に変えても同じ式になるので，
+\[
+\pi^{-\frac{s}{2}}\zeta(s)\Gamma\left(\frac{s}{2}\right)=\pi^{-\frac{1-s}{2}}\zeta(1-s)\Gamma\left(\frac{1-s}{2}\right)
+\]
+が成り立ちます．移項して，
+\[
+\zeta(s)=\pi^{s-\frac{1}{2}}\frac{\Gamma\left(\frac{1-s}{2}\right)}{\Gamma\left(\frac{s}{2}\right)}\zeta(1-s)=\pi^{s-\frac{1}{2}}\cdot\frac{\Gamma\left(\frac{1-s}{2}\right)\Gamma\left(\frac{1-s}{2}+\frac{1}{2}\right)}{\Gamma\left(\frac{s}{2}\right)\Gamma\left(1-\frac{s}{2}\right)}\cdot\zeta(1-s)
+\]
+ここで，(\ref{ERF})式と(\ref{LDF})式より，
+\[
+\Gamma\left(\frac{s}{2}\right)\Gamma\left(1-\frac{s}{2}\right)=\frac{\pi}{\sin\left(\frac{\pi s}{2}\right)}
+\]
+\[
+\Gamma\left(\frac{1-s}{2}\right)\Gamma\left(\frac{1-s}{2}+\frac{1}{2}\right)=2^{1-(1-s)}\sqrt{\pi}\cdot\Gamma(1-s)=2^s\sqrt{\pi}\cdot\Gamma(1-s)
+\]
+なので，
+\begin{equation}\label{fueq}
+\zeta(s)=\pi^{s-\frac{1}{2}}\cdot\frac{2^s\sqrt{\pi}\cdot\Gamma(1-s)}{\frac{\pi}{\sin\left(\frac{\pi s}{2}\right)}}\cdot\zeta(1-s)=2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(1-s)\zeta(1-s)
+\end{equation}
+が成り立ちます．この式は関数等式(functional equation)と呼ばれます．この関数等式に$s=-1$を代入してみると，
+\[
+\zeta(-1)=\frac{1}{2\pi^2}\cdot (-1)\cdot 1!\cdot\zeta(2)=-\frac{\zeta(2)}{2\pi^2}
+\]
+となり，
+\[
+\zeta(2)=Z(2)=\sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6}
+\]
+より\footnote{$\zeta(2)$の値を求める問題はバーゼル問題と呼ばれています．$\zeta(2)=\frac{\pi^2}{6}$の証明などは，ネットで検索すれば出てくるはずですし，前号の$e\pi isode$にもバーゼル問題に関連した記事があります．}，$\zeta(-1)=-\frac{1}{12}$となります．
+ここで，冒頭の(\ref{zeta-1})式をみてみましょう．この式の意味が分かったでしょうか．$1+2+3+4\cdots$は，この式においては，$Z(s)=\sum_{n=1}^{\infty}n^{-s}$を延長\footnote{数学用語では解析接続といいます}した関数である$\zeta(s)$に$s=-1$を代入したものということを表していたのです．
+
+\section{素数定理とリーマン予想}
+
+前節で出てきたリーマンゼータ関数ですが，18世紀のオイラーの時代から研究され始め，現代においても研究が続けられています．特に，整数論の分野でよく出てきます．ここでは，リーマンゼータ関数が絡む問題を2つ紹介しようと思います．
+
+1つ目は素数定理(prime number theorem)です．
+\begin{itembox}[l]{素数定理}
+$x$を実数とする．$\pi(x)$を1以上$x$以下の素数の個数だとすると，
+\[
+\lim_{x\to\infty}\frac{x\cdot\pi (x)}{\log x}=1
+\]
+が成り立つ．
+\end{itembox}
+この定理は，$x$以下の素数の個数が大体$\frac{x}{\log x}$で近似できることを表しています．証明はしませんが，素数定理は
+\[
+\operatorname{Re}(s)=1\text{のとき，}\zeta(s)\neq 0
+\]
+という命題と同値であり，これを用いて素数定理がアダマール\footnote{Jacques Salomon Hadamard, 1865-1863}とド・ラ・ヴァレー・プーサン\footnote{Charles-Jean de La Vall\'ee Poussin, 1866-1962}によって証明されています．
+
+リーマンゼータ関数と素数の関係性については次の式がよく表しています．
+\begin{equation}\label{zetaprod}
+Z(s)=\prod_{p:\text{素数}}\frac{1}{1-p^{-s}}
+\end{equation}
+これは，
+\[
+\sum_{k=0}^{\infty}{p^k}^{-s}=\frac{1}{1-p^{-s}}
+\]
+であることと，$\operatorname{Re}(s)>1$のとき，$\sum_{n=1}^{\infty}n^{-s}$は和の順番を変えても同じ値に収束することから証明できます．\vspace{\baselineskip}\\
+問2．(\ref{zetaprod})式を証明せよ．\vspace{\baselineskip}
+
+2つ目はリーマン予想(Riemann conjecture)です．
+\begin{itembox}[l]{リーマン予想}
+\[
+\zeta{s}=0\Rightarrow s\text{は負の偶数，または}\operatorname{Re}s=\frac{1}{2}
+\]
+\end{itembox}
+これはリーマンが\cite{APG}で提起した予想です．159年たった今でもまだ解決されていません．アメリカのクレイ数学研究所によって，この問題はミレニアム懸賞問題の1つとされ，100万ドルの懸賞金がかけられています\footnote{http://www.claymath.org/millennium-problems}．ゼータ関数の負の偶数でない零点$s$が$0\leq \operatorname{Re}(s)\leq 1$を満たすことは比較的簡単に証明できます．
+\[
+\left|\frac{1}{1-p^{-s}}\right|\geq \frac{1}{1+p^{-\operatorname{Re}(s)}}\geq e^{-p^{-\operatorname{Re}(s)}}
+\]
+なので，$\operatorname{Re}(s)>1$のとき，
+\begin{align*}
+\left|\zeta(s)\right|=&\prod_{p:\text{素数}}\left|\frac{1}{1-p^{-s}}\right|\\
+\geq&\exp\left(-\sum_{p:\text{素数}}p^{-\operatorname{Re}(s)}\right)\\
+\geq&\exp\left(-\sum_{n=1}^{\infty}n^{-\operatorname{Re}(s)}\right)\\
+=&\exp(-\zeta(\operatorname{Re}(s))>0
+\end{align*}
+となり，
+\[
+\operatorname{Re}(s)>1\Rightarrow\zeta(s)\neq 0
+\]
+が成り立ちます．(\ref{fueq})式を使うことで，
+\[
+\operatorname{Re}(s)<0,\;s\text{は負の偶数でない}\Rightarrow\zeta(s)\neq 0
+\]
+も成り立つので，これらの対偶より，
+\[
+\zeta(s)=0\Rightarrow 0\leq\operatorname{Re}(s)\leq 1\text{または}s\text{は負の偶数}
+\]
+が示されました．\vspace{\baselineskip}
+
+この記事はこれで終わりです．読んでいただきありがとうございました．
+
+\begin{thebibliography}{9}
+\bibitem{Ram}Berndt, B. C. (1985). {\it Ramanujan's notebooks: Part 1.} New York: Springer-Verlag.
+\bibitem{Div}Hardy, G. H. (1949). {\it Divergent series.} Oxford: Clarendon Press.
+\bibitem{Com}Ahlfors, L. V. (1979). {\it Complex analysis. 3rd ed.} McGraw-Hill Book Company. (アールフォルス，L. V., 笠原乾吉(訳) (1982). 複素解析. 現代数学社)
+\bibitem{Mod}Whittaker, E. T., Watson, G. N. (1920). {\it A course of modern analysis. 3rd ed.} Cambridge: Cambridge University Press
+\bibitem{HPG} Davis, P. J. (1959). Leonhard Euler's Integral: A Historical Profile of the Gamma Function, {\it The Am. Math. Mon..} 66:10, 849-869. DOI: 10.1080/00029890.1959.11989422
+\bibitem{APG}Riemann, G. F. B. (1859). Ueber die Anzahl der Primzahlen unter einer gegebenen Gr\"osse. {\it Monats. Preuss. Akad. Wiss..} 11.
+\bibitem{Ele}Diamond, H. G. (1982). Elementary methods in the study of the distribution of prime numbers, {\it Bull. Amer. Math. Soc.} 7:3, 553-589. DOI:10.1090/S0273-0979-1982-15057-1
+\end{thebibliography}
+
+\end{document}
