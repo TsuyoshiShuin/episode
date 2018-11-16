@@ -15,7 +15,7 @@
 % 番号付けをする場合はsection,Subsection,subsubsectionで行う(小文字に注意！)
 % 和文の句読点は全角のカンマとピリオドを使ってください
 
-\Section*{イントロダクション}
+\Section{イントロダクション}
 
 この文章は，理学部数学科4年(2018年度)の濱田が，
 駒場祭での数学科企画「ますらぼ」のために作成したものです．
@@ -29,7 +29,7 @@
 なお，本文中に高校数学で学ぶ記号が説明なしに登場します．
 意味が分からなければ，調べていただくか，読み飛ばしていただいても差し支えありません．
 
-\Section{確率論とは}
+\section{確率論とは}
 
 皆さんは「確率」と聞いてどんなことを思い浮かべますか．
 サイコロやくじを頭に浮かべた方もいれば，
@@ -40,7 +40,7 @@
 本章では，私たちが中学校や高校で学ぶ確率に関する事柄を思い出しつつ，
 大学で学ぶ「確率論」と呼ばれる数学の理論について簡単に触れてみたいと思います．
 
-\Subsection{中学校で学ぶ「確率」}
+\subsection{中学校で学ぶ「確率」}
 
 現行の学習指導要領では，
 中学校第2学年において以下の内容を学習することになっています．
@@ -60,7 +60,7 @@
 簡単な場合についての確率の求め方や，
 確率を根拠として例えばくじ引きの公平性を説明するといったことを学習します．
 
-\Subsection{高等学校で学ぶ「確率」}
+\subsection{高等学校で学ぶ「確率」}
 
 現行の学習指導要領では，
 多くの高校生が第1学年で学ぶ数学Aにおいて，
@@ -95,7 +95,7 @@
 高等学校ではこれらに加え独立性や条件付き確率といった
 中学校では学んでいなかったことも学習します．
 
-\Subsection{大学で学ぶ「確率」}
+\subsection{大学で学ぶ「確率」}
 
 中学校や高校では主に確率の具体的な計算方法が扱われていましたが，
 確率の持つ性質についてもきちんと触れられています．
@@ -128,7 +128,7 @@
 そこで次章では，ルベーグ積分や測度論に触れたことがなくても
 ある程度理解できる範囲で，確率論の考え方を説明してみたいと思います．
 
-\Section{確率論入門}
+\section{確率論入門}
 
 それでは，よく知られている「理想的なサイコロ」について，
 確率論らしい，少しだけ抽象的な議論をしてみましょう．
@@ -142,7 +142,7 @@
 1の目の出る割合が$\dfrac{1}{6}$に近づくことを確かめる」
 ことです．
 
-\Subsection{1回のサイコロ投げのモデル化}\label{subsec:finiteprobsp}
+\subsection{1回のサイコロ投げのモデル化}\label{subsec:finiteprobsp}
 
 $\Omega$を
 「理想的なサイコロを1回投げる」という試行の根元事象全部の集合
@@ -194,7 +194,7 @@ $P(F\cup G)=P(F)+P(G)$
 %また，$\Omega,\mathcal{F},P$はそれぞれ標本空間，事象の族，確率と呼ばれる．
 %\end{hamadadefi}
 
-\Subsection{無限回のサイコロ投げのモデル化}\label{subsec:infiniteprobsp}
+\subsection{無限回のサイコロ投げのモデル化}\label{subsec:infiniteprobsp}
 
 ところで，本章の目標は
 「理想的なサイコロを何回も投げていくと，
@@ -278,7 +278,7 @@ $P(F\cup G)=P(F)+P(G)$
 %また，$\Omega,\mathcal{F},P$はそれぞれ標本空間，事象の族，確率測度と呼ばれる．
 %\end{hamadadefi}
 
-\Subsection{1の目が出る回数を記録する}\label{randomvariable}
+\subsection{1の目が出る回数を記録する}\label{randomvariable}
 
 以下，$(\Omega,\mathcal{F},P)$を\ref{subsec:infiniteprobsp}節で定義したものとします．
 $n=1,2,\cdots$に対し，$X_n$を次のように定めます．
@@ -308,7 +308,7 @@ $P(\{\omega\in\Omega\mid S_2(\omega)=0\})$を求めてください．
 ここまで準備すると，本章の目標は次のように書くことができます:
 $n\to\infty$のとき$\dfrac{S_n}{n}\to\dfrac{1}{6}$となる．
 
-\Subsection{1の目が出る割合の収束}\label{subsec:LOLN}
+\subsection{1の目が出る割合の収束}\label{subsec:LOLN}
 
 さて，あとは
 $n\to\infty$のとき$\dfrac{S_n}{n}\to\dfrac{1}{6}$となる
@@ -382,13 +382,13 @@ $\dfrac{S_n}{n}$は$\dfrac{1}{6}$に概収束することがわかります．
 このように，確率論は私たちが確率について当たり前だと思っている性質
 を数学的にきちんと保証してくれる素敵な理論なのです．
 
-\Section{問題の解答}
+\section{問題の解答}
 
-\Subsubsection*{問題\ref{checkofF}}
+\Subsubsection{問題\ref{checkofF}}
 「1以外の目が出る」が$\{2,3,4,5,6\}$，
 「素数の目が出る」が$\{2,3,5\}$です．
 
-\Subsubsection*{問題\ref{checkofP}}
+\Subsubsection{問題\ref{checkofP}}
 \begin{itemize}
 \item[(1)]
 $P$は$\Omega$ではなく$\mathcal{F}$の要素に対して値を出してくれるものだから．
@@ -406,10 +406,10 @@ $P(\varnothing)=0$が従います．
 また，$P(\Omega)=1$であることは(2)の$P(A)$と同様の計算をすれば確認できます．
 \end{itemize}
 
-\Subsubsection*{問題\ref{checkofsigmaalgebra}}
+\Subsubsection{問題\ref{checkofsigmaalgebra}}
 $\{\omega\in\Omega\mid\omega_{2018}=1\}$
 
-\Subsubsection*{問題\ref{checkofadditivity}}
+\Subsubsection{問題\ref{checkofadditivity}}
 $F_1=F$，$F_2=G$とし，$k=3,4,\cdots$に対して$F_k=\varnothing$とします．
 すると，この$F_1,F_2,\cdots\in\mathcal{F}$は
 「相異なる自然数$i,j$に対して$F_i\cap F_j=\varnothing$となる」
@@ -434,7 +434,7 @@ P(\{\omega_1=6\}) \]
 上式の右辺の各項の値は$\dfrac{1}{6}$なので，
 $P(\Omega)=1$となります．
 
-\Subsubsection*{問題\ref{checkofrandomvariable}}
+\Subsubsection{問題\ref{checkofrandomvariable}}
 $P(\{\omega\in\Omega\mid S_2(\omega)=0\})
 %=P(S_2=0)
 $は
@@ -449,7 +449,7 @@ $は
 %&=\frac{25}{36}
 %\end{align*}
 
-\Subsubsection*{問題\ref{test}}
+\Subsubsection{問題\ref{test}}
 \ref{randomvariable}節以降の説明を真似てみましょう．
 
 以下，$(\Omega,\mathcal{F},P)$を\ref{subsec:infiniteprobsp}節で定義したものとします．
