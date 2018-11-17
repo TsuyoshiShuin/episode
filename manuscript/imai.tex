@@ -85,7 +85,8 @@ S(1+2+3+4+\cdots)=\infty,\;A(1-1+1-1+\cdots)=\frac{1}{2}
 ここまで読んで，そんな勝手に計算方法を変えたものにアーベル「和」などと名前を付けてもいいのか，と思った読者の方もいるかもしれませんが，実は，無限級数が通常の計算方法で収束するとき，アーベル和が定義できて同じ値になるのです(証明は高校数学の範囲を超えてしまうので省略します\footnote{証明はアーベルの連続性定理，またはAbel's theorem on power seriesで検索すれば出てくると思います．})．\vspace{1\baselineskip}\\
 問1．次の無限級数$I$に対し$S(I)=A(I)$であることを示せ．\\
 ただし，$0<|x|<1$で$\lim_{n\to\infty}\sum_{k=0}^n\frac{x^k}{k+1}=\frac{\log(1-x)}{x}$であることを用いてよい．
-\begin{enumerate}[label={(\arabic*)}]
+\begin{enumerate}%[label={(\arabic*)}]
+\renewcommand{\labelenumi}{(\arabic{enumi})}%こっちだとうまくいく. by 執印 11/17 21:40
 \item $I:1+1+\frac{3}{4}+\frac{1}{2}+\cdots+\frac{k}{2^k}+\cdots$
 \item $I:1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+\cdots+\frac{(-1)^k}{k}+\cdots$
 \end{enumerate}\vspace{1\baselineskip}
