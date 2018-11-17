@@ -12,6 +12,10 @@
 % main.tex に移動
 %\usepackage{wrapfig}
 %\usepackage[all]{xy}
+%<<<<<<< master
+%=======
+
+%>>>>>>> master
 \def\objectstyle{\displaystyle}
 \theoremstyle{definition} % definition? idefinition と書いてあった
 \newtheorem{idefi}{定義}[section] 
@@ -21,7 +25,7 @@
 \renewcommand\proofname{\bf 証明} 
 
 \begin{document}
-\chapter{正多面体(井上)}
+\Chapter{正多面体(井上)} % \chapter になっていたので修正
 \section{前書き}
 % 文頭の \ は不要，以下同様
 % コレは趣味だが，"$e\pi^i sode$" なのでは
@@ -53,7 +57,11 @@
 \begin{wrapfigure}{r}{5cm}
   \vspace{-2\baselineskip}
   \begin{center}
-    \includegraphics[width=5cm]{./Inoue_image/i1.pdf}
+%<<<<<<< master
+  \includegraphics[width=5cm]{manuscript/Inoue_image/i1.pdf}
+%=======
+%    \includegraphics[width=10cm]{manuscript/Inoue_image/i1.pdf}
+%>>>>>>> master
   \end{center}
   \vspace{-1\baselineskip}
 \end{wrapfigure}
@@ -106,7 +114,11 @@ $k$面体群の位数に関しては，四面体群の時と同様に頂点に�
 
 正六面体と正八面体，正十二面体と正二十面体，いずれも$k$面体群が同型になっています．これはこの二組がそれぞれ双対と呼ばれる関係になっていることと関係があります．ここでは2つの多面体が双対であることを一方の多面体の辺の中心を結んだらもう一方の多面体になるということで定義します．
 
-\includegraphics[width=10cm]{./Inoue_image/i2.pdf}
+%<<<<<<< master
+\includegraphics[width=10cm]{manuscript/Inoue_image/i2.pdf}
+%=======
+%\includegraphics[width=18cm]{manuscript/Inoue_image/i2.pdf}
+%>>>>>>> master
 
 双対な多角形同士では，それぞれ頂点における回転と面の中心における回転が１対1に対応しているので，回転による対称性を考えると同じ対称性を持っていることがわかります．
 \section{対称群}
@@ -139,7 +151,11 @@ $k$面体群の位数に関しては，四面体群の時と同様に頂点に�
 
 四面体群が$\mathfrak{A}_4$とみなせるのはどうしてでしょう．四面体の頂点に1～4の番号を振ります．すると回転というのはこの四面体の番号を入れ替えることに他なりません．例えば頂点を中心にして$\frac{2\pi}{3}$回転させることを考えます．
 
-\includegraphics[width=10cm]{./Inoue_image/i3.pdf}
+%<<<<<<< master
+\includegraphics[width=10cm]{manuscript/Inoue_image/i3.pdf}
+%=======
+%\includegraphics[width=15cm]{manuscript/Inoue_image/i3.pdf}
+%>>>>>>> master
 
 上の図のように回転をさせることと頂点を入れ替えることが対応しています．ここで$1234\rightarrow1423$というのは(24)(34)に対応しています．ほかの回転も全て試してみると，この四面体の対称性の群がちょうど$\mathfrak{A}_4$に一致することがわかります．ちなみに鏡映も含めた拡大四面体群のほうは$\mathfrak{S}_4$に一致します．
 

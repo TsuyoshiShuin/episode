@@ -1,0 +1,55 @@
+\documentclass[notombow,episode,openany,dvipdfmx]{kyouritu}
+\usepackage{graphicx,color}
+\usepackage{tikz}
+\usepackage{makeidx,multicol}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{standalone}
+\usepackage{tocloft}
+\usepackage{aliascnt}
+\usepackage{ascmac}
+\usepackage{subfiles}
+
+
+%inoue.texより移動
+\usepackage{wrapfig}
+\usepackage[all]{xy}
+
+
+
+
+%Section等先頭を大文字にすると番号付けしない．
+\newcommand{\Chapter}[1]{\chapter*{{\Huge #1}}
+\markboth{#1}{#1}
+\addcontentsline{toc}{chapter}{#1}
+\stepcounter{chapter}}
+\newcommand{\Section}[1]{\section*{{\huge #1}}
+\addcontentsline{toc}{section}{#1}}
+\newcommand{\Subsection}[1]{\subsection*{\underline{#1}}}
+\newcommand{\Subsubsection}[1]{\subsubsection*{#1}}
+\setcounter{tocdepth}{0} %Chapterのみ表示する
+\renewcommand*{\sectionmark}[1]{}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand*{\KBsectionfont}[1]{\normalfont\bfs\huge #1}
+
+
+
+%本文
+\begin{document}
+\frontmatter
+\input{maegaki}
+\clearpage % tocloft パッケージを使う場合は自分で \clearpage しないといけない
+\tableofcontents
+\cleardoublepage % 本文を見開き右から始めるために追加（ヘッダのページ数表示の関係上右始めの必要あり） 2018/7/10 by Okudenn
+\mainmatter
+\subfile{manuscript/hamada}
+\subfile{manuscript/inoue}
+\subfile{manuscript/imai}
+\subfile{manuscript/morikawa}
+% \cftaddtitleline{toc}{chapter}{圏論が分かる4コマ漫画(小林)}{章間}
+% このようにすると好きなように目次を変更できる
+\backmatter
+%\Chapter{編集後記}を入れても良い
+\input{atogaki}
+\end{document}

@@ -1,0 +1,512 @@
+\documentclass[./main]{subfiles} % これを最初に書く
+
+% ここにnewtheorem,newenvironment,defなどを書く
+\theoremstyle{definition}
+\newtheorem{hamadadefi}{定義}[Section]
+\newtheorem{hamadaqst}[hamadadefi]{問題}
+\newtheorem{hamadaprop}[hamadadefi]{命題}
+\newtheorem{hamadathm}[hamadadefi]{定理}
+
+\begin{document} %ここから文章を始める
+
+\Chapter{確率論への招待(濱田)} 
+% 章だては
+% 番号付けをしない場合はSection,Subsection,Subsubsectionで行う(大文字に注意！)
+% 番号付けをする場合はsection,Subsection,subsubsectionで行う(小文字に注意！)
+% 和文の句読点は全角のカンマとピリオドを使ってください
+
+\Section{イントロダクション}
+
+この文章は，理学部数学科4年(2018年度)の濱田が，
+駒場祭での数学科企画「ますらぼ」のために作成したものです．
+ますらぼでのミニ講演は10-15分程度であり，短い時間の中で
+数学の魅力を伝えることはできても，数学をきちんと語るには
+それなりの時間が必要です．そこで，講演では概要だけわかりやすく
+説明して，詳しい中身に興味が湧いた方にはこの文章を読んでもらおう，
+ということにしました．この文章で講演内容をどれだけ補えているかは
+わかりませんが，できるだけわかりやすく書いたつもりです．
+お暇なときにゆっくりお読みいただければ幸いです．
+なお，本文中に高校数学で学ぶ記号が説明なしに登場します．
+意味が分からなければ，調べていただくか，読み飛ばしていただいても差し支えありません．
+
+\section{確率論とは}
+
+皆さんは「確率」と聞いてどんなことを思い浮かべますか．
+サイコロやくじを頭に浮かべた方もいれば，
+天気予報や株価を連想した方もいらっしゃるかもしれません．
+確率やその考え方は，私たちが考えている以上に日常の中で使われています．
+私たちが当たり前だと思っていることが，
+実は確率の考え方に基づいているということもあります．
+本章では，私たちが中学校や高校で学ぶ確率に関する事柄を思い出しつつ，
+大学で学ぶ「確率論」と呼ばれる数学の理論について簡単に触れてみたいと思います．
+
+\subsection{中学校で学ぶ「確率」}
+
+現行の学習指導要領では，
+中学校第2学年において以下の内容を学習することになっています．
+\begin{quote}
+不確定な事象についての観察や実験などの活動を通して，
+確率について理解し，それを用いて考察し表現することができるようにする．
+\begin{itemize}
+\item[ア]確率の必要性と意味を理解し，簡単な場合について確率を求めること．
+\item[イ]確率を用いて不確定な事象をとらえ説明すること．
+\end{itemize}
+\end{quote}
+確率は，不確定な事象の起こりやすさの程度を数値で表現し把握するために用いられます．
+私たちの生活の中には，気象などの自然現象や為替相場のような
+不確定な事象が多く存在していますが，
+数学ではこのような事象をも考察の対象としているのです．
+以上を踏まえ，中学校では「2枚の硬貨を投げたときの表裏の出方」のような
+簡単な場合についての確率の求め方や，
+確率を根拠として例えばくじ引きの公平性を説明するといったことを学習します．
+
+\subsection{高等学校で学ぶ「確率」}
+
+現行の学習指導要領では，
+多くの高校生が第1学年で学ぶ数学Aにおいて，
+以下の内容を学習することになっています．
+\begin{itemize}
+\item[ア]確率とその基本的な法則
+
+確率の意味や基本的な法則についての理解を深め，
+それらを用いて事象の確率を求めること．
+また，確率を事象の考察に活用すること．
+\item[イ]独立な試行と確率
+
+独立な試行の意味を理解し，独立な試行の確率を求めること．
+また，それを事象の考察に活用すること．
+\item[ウ]条件付き確率
+
+条件付き確率の意味を理解し，
+簡単な場合について条件付き確率を求めること．
+また，それを事象の考察に活用すること．
+\end{itemize}
+学習目標は中学校第2学年と大きく変わるわけではありませんが，
+確率を学習する前に順列・組合せおよびその総数の求め方に触れます．
+確率の基本的な法則としては
+\begin{itemize}
+\item 任意の事象$A$について$0\leqq P(A)\leqq1$
+\item 空事象$\varnothing$の確率$P(\varnothing)=0$
+\item 全事象$S$の確率$P(S)=1$
+\item 事象$A,B$が排反事象のとき$P(A\cup B)=P(A)+P(B)$
+\item 事象$A$の余事象$\overline{A}$の確率$P(\overline{A})=1-P(A)$
+\end{itemize}
+が挙げられます．
+高等学校ではこれらに加え独立性や条件付き確率といった
+中学校では学んでいなかったことも学習します．
+
+\subsection{大学で学ぶ「確率」}
+
+中学校や高校では主に確率の具体的な計算方法が扱われていましたが，
+確率の持つ性質についてもきちんと触れられています．
+例えば，中学校では以下のようなことを学習したはずです．
+\begin{quote}
+表裏どちらが出ることも同様に確からしいコインを何回も投げていくと，
+コインを投げた回数に対する表が出た回数の割合は0.5に近づく．
+\end{quote}
+おそらく多くの方は，そんなの当たり前じゃないかと思うのではないでしょうか．
+もちろん，学校でそう教えられているわけですし，
+この事実そのものは大変重要なので，
+それを当たり前と思うこと自体は悪いことではありません．
+しかし，数学に限らず「当たり前を疑う」のが学問というものです．
+
+少し考えてみると，上の事実は極めて奇妙な現象です．
+コイン自身は何の意志も持っておらず，
+投げている人も何ひとつ考えず投げているのに，
+表が出た回数の割合は\textbf{必ず}0.5に近づいている．
+つまり，ランダムに起こっている現象が「規則性」を生み出しているわけです．
+確率論とは，コイントスのような
+\textbf{ランダムな現象の中に現れる法則性を調べ，
+証明していく理論}のことなのです．
+
+確率論を本格的に勉強するためには，
+東京大学理学部数学科においては学部3年の前半で学ぶことになる
+「ルベーグ積分」や「測度論」の基礎を身につける必要があります．
+これらを学習するために，学部1，2年で勉強する微分積分や
+線形代数を理解し使えるようにしておく必要性は，言うまでもありません．
+
+そこで次章では，ルベーグ積分や測度論に触れたことがなくても
+ある程度理解できる範囲で，確率論の考え方を説明してみたいと思います．
+
+\section{確率論入門}
+
+それでは，よく知られている「理想的なサイコロ」について，
+確率論らしい，少しだけ抽象的な議論をしてみましょう．
+理想的なサイコロとは，皆さんのご想像の通り
+「1,2,3,4,5,6のどの目が出ることも同様に確からしい」
+サイコロのことです．
+つまり，「1の目が出やすい」とか「偶数の目が出やすい」とか
+そのようなことがない公平なサイコロ，ということです．
+本章の目標は
+「理想的なサイコロを何回も投げていくと，
+1の目の出る割合が$\dfrac{1}{6}$に近づくことを確かめる」
+ことです．
+
+\subsection{1回のサイコロ投げのモデル化}\label{subsec:finiteprobsp}
+
+$\Omega$を
+「理想的なサイコロを1回投げる」という試行の根元事象全部の集合
+とします．すなわち
+\[ \Omega=\{1,2,3,4,5,6\} \]
+とします．
+また，$\Omega$の部分集合全部の集合を$\mathcal{F}$とします．
+
+根元事象という言葉は意外とわかりづらいのですが，
+試行を行うことで起こりうる事象のうち「最小」のもの，と言えます．
+すなわち，今の場合なら「1の目が出る」や「5の目が出る」がそれに該当し，
+$\Omega$の要素一つひとつがそれらを表しています．
+また，根元事象でない事象，例えば「1以外の目が出る」や「素数の目が出る」は
+$\mathcal{F}$の要素です．
+つまり，$\mathcal{F}$は
+「理想的なサイコロを1回投げる」という試行の事象全部の集合
+ということになります．
+
+\begin{hamadaqst}\label{checkofF}
+2つの事象「1以外の目が出る」と「素数の目が出る」を
+それぞれ$\mathcal{F}$の要素として表してください．
+\end{hamadaqst}
+
+次に，
+%$\mathcal{F}$の要素を0以上1以下の実数に対応させるもの
+$P$を次の条件をすべて満たすものとします．
+\begin{enumerate}
+\item $P(\{1\})=P(\{2\})=P(\{3\})=P(\{4\})=P(\{5\})=P(\{6\})=\dfrac{1}{6}$
+\item $F\cap G=\varnothing$を満たすすべての$F,G\in\mathcal{F}$に対して
+$P(F\cup G)=P(F)+P(G)$
+\end{enumerate}
+この$P$が「理想的なサイコロを1回投げる」という試行の事象の確率を表すと考えます．
+ここで，$P$は\textbf{$\mathcal{F}$の要素に対して}値を出してくれるものであることに注意してください．
+
+\begin{hamadaqst}\label{checkofP}
+次の問いに答えてください．
+\begin{itemize}
+\item[(1)]$P$の性質1において，$P(1)$や$P(5)$ではなく$P(\{1\})$や$P(\{5\})$となっているのはなぜでしょうか．
+\item[(2)]「4の約数の目が出る」という事象，「3の倍数の目が出る」という事象をそれぞれ$A,B$とします．
+このとき，$P$の性質1,2のみを用いて，$P(A)$，$P(B)$，$P(A\cup B)$を計算してください．
+\item[(3)]$P$の性質1,2のみを用いて，$P(\varnothing)=0$，$P(\Omega)=1$であることを確かめてください．
+\end{itemize}
+\end{hamadaqst}
+
+これで，理想的なサイコロを1回投げるという試行をモデル化できました．
+
+%\begin{hamadadefi}\label{finiteprobabilityspace}
+%組$(\Omega,\mathcal{F},P)$のことを\textbf{確率空間}と呼ぶ．
+%また，$\Omega,\mathcal{F},P$はそれぞれ標本空間，事象の族，確率と呼ばれる．
+%\end{hamadadefi}
+
+\subsection{無限回のサイコロ投げのモデル化}\label{subsec:infiniteprobsp}
+
+ところで，本章の目標は
+「理想的なサイコロを何回も投げていくと，
+1の目の出る割合が$\dfrac{1}{6}$に近づくことを確かめる」
+ことでした．
+従って，実際には理想的なサイコロを無限回投げるという試行を考える必要があります．
+ここでは，そのような試行をモデル化してみましょう．
+
+まず，集合$\Omega$を次のように定義します．
+\[ \Omega=\{\omega=(\omega_1,\omega_2,\cdots)\mid
+すべてのn=1,2,\cdots に対し\ \omega_n\in\{1,2,3,4,5,6\}\} \]
+ここで，$\omega_n$は「$n$回目に出た目」を表しています．
+例えば，$\omega=(1,5,2,\cdots)$という要素は
+「1回目に1の目が出て，2回目に5の目が出て，3回目に2の目が出て，$\cdots$」
+という根元事象を表す，ということです．
+また，$\Omega$の部分集合の集合$\mathcal{F}$を
+\[ \mathcal{F}=\sigma(\{\omega\in\Omega\mid\omega_n=k\}
+:n=1,2,\cdots;k\in\{1,2,3,4,5,6\}) \]
+と定めます．
+右辺の記号は
+「$\{\omega\in\Omega\mid\omega_n=k\}$たち
+\footnote{つまり，
+$\{\omega\in\Omega\mid\omega_2=1\}$や
+$\{\omega\in\Omega\mid\omega_5=3\}$などのことです．}
+によって生成される
+$\sigma$加法族」を意味します．
+詳細は省きますが，\ref{subsec:finiteprobsp}節で出てきた
+$\mathcal{F}$と同じように，この集合が
+「理想的なサイコロを無限回投げる」という試行の事象全部の集合
+を表しています．
+%そして，$\mathcal{F}$の性質から特に次の事実がわかります．
+
+%\begin{hamadaprop}\label{propofsigmaalgebra}
+%「理想的なサイコロを何回も投げていくと，
+%1の目の出る割合が$\dfrac{1}{6}$に近づく」という事象
+%\[ F=\left\{\omega=(\omega_1,\omega_2,\cdots)\in\Omega\ \middle|\ 
+%\frac{(\omega_1,\omega_2,\cdots,\omega_n\ のうち値が1であるものの個数)}
+%{n}\to\frac{1}{6}\ (n\to\infty)\right\} \]
+%は$\mathcal{F}$の要素である．
+%\end{hamadaprop}
+
+\begin{hamadaqst}\label{checkofsigmaalgebra}
+「2018回目に1の目が出る」という事象を$\mathcal{F}$の要素として表してください．
+\end{hamadaqst}
+
+次に，
+$\mathcal{F}$の要素を0以上1以下の実数に対応させるもの
+$P$を，次の条件をすべて満たすものとします．
+ここで，$\sigma$加法族の定義から
+$\varnothing,\Omega\in\mathcal{F}$です．
+\begin{enumerate}
+\item $P(\varnothing)=0$
+%\item すべての$n=1,2,\cdots$および$k\in\{1,2,3,4,5,6\}$に対し
+%$P(\{\omega\in\Omega\mid\omega_n=k\})=\dfrac{1}{6}$
+%\item $n=1,2,\cdots$および$k\in\{1,2,3,4,5,6\}$に対し
+%$E_n(k)=\{\omega\in\Omega\mid\omega_n=k\}$とおく．
+%任意の$k_1,k_2,\cdots,k_i\in\{1,2,3,4,5,6\}$および相異なる自然数$n_1,n_2,\cdots,n_i$
+%($i\geqq1$)に対して
+%\[ P(E_{n_1}(k_1)\cap E_{n_2}(k_2)\cap\cdots\cap E_{n_i}(k_i))
+%=\frac{1}{6^i} \]
+%が成り立つ．
+\item 相異なる自然数$i,j$に対して$F_i\cap F_j=\varnothing$となるような
+すべての$F_1,F_2,\cdots\in\mathcal{F}$に対して
+\[ P(F_1\cup F_2\cup\cdots)=P(F_1)+P(F_2)+\cdots \]
+が成り立つ．ここで，$F_1\cup F_2\cup\cdots\in\mathcal{F}$
+であることは$\sigma$加法族の定義からわかる．
+\end{enumerate}
+この$P$が「理想的なサイコロを無限回投げる」という試行の事象の確率を表すと考えます．
+
+\begin{hamadaqst}\label{checkofadditivity}
+$P$の性質1,2から，
+$F\cap G=\varnothing$を満たすすべての$F,G\in\mathcal{F}$に対して
+$P(F\cup G)=P(F)+P(G)$
+であることを導き，さらに$P(\Omega)=1$であることを確かめてください．
+\end{hamadaqst}
+
+これで，理想的なサイコロを無限回投げるという試行をモデル化できました．
+
+%\begin{hamadadefi}\label{infiniteprobabilityspace}
+%組$(\Omega,\mathcal{F},P)$のことを\textbf{確率空間}と呼ぶ．
+%また，$\Omega,\mathcal{F},P$はそれぞれ標本空間，事象の族，確率測度と呼ばれる．
+%\end{hamadadefi}
+
+\subsection{1の目が出る回数を記録する}\label{randomvariable}
+
+以下，$(\Omega,\mathcal{F},P)$を\ref{subsec:infiniteprobsp}節で定義したものとします．
+$n=1,2,\cdots$に対し，$X_n$を次のように定めます．
+\[ すべての\ \omega\in\Omega\ に対しX_n(\omega)=
+\begin{cases}1 & (\omega_n=1) \\ 0 & (\omega_n\neq1)\end{cases} \]
+定義からわかるように，$X_n$は
+「根元事象$\omega\in\Omega$の$n$回目の目が1かどうかを判定する関数」
+であると言えます．
+さらに，この$X_1,X_2,\cdots$たちを使って，$S_1,S_2,\cdots$を
+\[ すべての\ \omega\in\Omega\ に対し
+S_n(\omega)=X_1(\omega)+X_2(\omega)+\cdots+X_n(\omega) \]
+と定義すれば，$S_n$は
+「根元事象$\omega\in\Omega$において，
+$n$回目までで1の目が何回出たかを教えてくれる関数」
+となります．
+
+$X_n$たちや$S_n$たちは，
+すべての値についてその値を取る確率が決まっています．
+例えば，$X_5(\omega)=1$となる確率，すなわち
+$P(\{\omega\in\Omega\mid\omega_5=1\})$は$\dfrac{1}{6}$です．
+このような関数のことを\textbf{確率変数}と呼びます．
+
+\begin{hamadaqst}\label{checkofrandomvariable}
+$P(\{\omega\in\Omega\mid S_2(\omega)=0\})$を求めてください．
+\end{hamadaqst}
+
+ここまで準備すると，本章の目標は次のように書くことができます:
+$n\to\infty$のとき$\dfrac{S_n}{n}\to\dfrac{1}{6}$となる．
+
+\subsection{1の目が出る割合の収束}\label{subsec:LOLN}
+
+さて，あとは
+$n\to\infty$のとき$\dfrac{S_n}{n}\to\dfrac{1}{6}$となる
+ことを確認するのみとなりました．
+この事実，すなわち
+「理想的なサイコロを何回も投げていくと，
+1の目の出る割合が$\dfrac{1}{6}$に近づく」
+ことを数学的に保証してくれるのが，\textbf{大数の法則}です．
+名前が紛らわしいですが，きちんと証明できる立派な数学の定理です．
+この定理には仮定や結論にいくつもの種類があるのですが，
+ここではその1つを紹介しましょう．
+
+\begin{hamadathm}[大数の強法則]\label{stronglawoflargenumber}
+独立な確率変数列$X_1,X_2,\cdots$が，ある定数$\mu$と$K\geqq0$に対して
+\[ E(X_k)=\mu，E(X_k^4)\leqq K\ (k=1,2,\cdots) \]
+を満たすとする．
+このとき，$S_n=X_1+X_2+\cdots+X_n$に対し$\dfrac{S_n}{n}$は$\mu$に概収束する．
+すなわち
+\[ P\left(\left\{\omega\in\Omega\ \middle|
+\ \frac{S_n(\omega)}{n}\to\mu\ (n\to\infty)\right\}\right)=1 \]
+が成り立つ．
+\end{hamadathm}
+
+まず，定理\ref{stronglawoflargenumber}の中身を簡単に説明しましょう．
+なお，登場する用語などの正確な定義には触れず，直感的な説明に留めることにします．
+\begin{itemize}
+\item 初めに出てくる「独立な確率変数列$X_1,X_2,\cdots$」とは，大雑把に言えば
+「$X_1,X_2,\cdots$たちの値はお互いに影響しあわない」
+ということを意味します．つまり，
+$X_3$がこの値をとったから$X_7$はこの値になる，
+みたいな現象が起こらないということです．
+\item $E(X)$は「確率変数$X$が取りうる値の，確率を込めた平均値
+\footnote{これを確率変数$X$の期待値と呼びます．}
+」を表す記号です．
+例えば，理想的なサイコロを投げて
+3の倍数が出たら6ポイント，それ以外が出たら$-3$ポイントとなるゲーム
+を1回行うとき，もらえるポイントの確率を込めた平均値は
+\[ 6\cdot\frac{1}{3}+(-3)\cdot\frac{2}{3}=0 \]
+より，0ポイントとなります．
+\item $S_n$は$\Omega$の要素を0以上の整数に対応させる関数でしたから，
+第$n$項を$\dfrac{S_n(\omega)}{n}$とする数列を考えようにも，
+この数列は$\omega$によって変わってしまいます．
+そこで，1の目が出る割合$\dfrac{S_n}{n}$の収束を，
+$\dfrac{S_n(\omega)}{n}\to\mu$となるような事象の確率が1，
+というように定義しているのです．
+このように定義されるものを概収束と呼びます．
+\end{itemize}
+
+では，\ref{randomvariable}節までで定義した理想的なサイコロ投げのモデルに，
+定理\ref{stronglawoflargenumber}をあてはめてみましょう．
+各回のサイコロの目は互いに影響しあわないので，
+確率変数$X_1,X_2,\cdots$は独立です．
+また，すべての$k=1,2,\cdots$に対して
+\[ E(X_k)=1\cdot\frac{1}{6}+0\cdot\frac{5}{6}=\frac{1}{6}，
+E(X_k^4)=\frac{1}{6} \]
+となります．
+従って，定理\ref{stronglawoflargenumber}の仮定がすべて満たされているので，
+$\dfrac{S_n}{n}$は$\dfrac{1}{6}$に概収束することがわかります．
+つまり，「理想的なサイコロを何回も投げていくと，
+1の目の出る割合が$\dfrac{1}{6}$に近づくことを確かめる」
+ことができました．
+
+\begin{hamadaqst}\label{test}
+定理\ref{stronglawoflargenumber}を用いて，次の事実を示してください．
+\begin{center}
+理想的なサイコロを何回も投げていくと，
+出た目の数の合計を投げた回数で割った値は$3.5$に近づく．
+\end{center}
+\end{hamadaqst}
+
+このように，確率論は私たちが確率について当たり前だと思っている性質
+を数学的にきちんと保証してくれる素敵な理論なのです．
+
+\section{問題の解答}
+
+\Subsubsection{問題\ref{checkofF}}
+「1以外の目が出る」が$\{2,3,4,5,6\}$，
+「素数の目が出る」が$\{2,3,5\}$です．
+
+\Subsubsection{問題\ref{checkofP}}
+\begin{itemize}
+\item[(1)]
+$P$は$\Omega$ではなく$\mathcal{F}$の要素に対して値を出してくれるものだから．
+\item[(2)]
+$A=\{1,2,4\}$なので
+\[ P(A)=P(\{1,2,4\})=P(\{1,2\})+P(\{4\})=P(\{1\})+P(\{2\})+P(\{4\})
+=\frac{1}{6}+\frac{1}{6}+\frac{1}{6}=\frac{1}{2} \]
+となります．
+また，$B=\{3,6\}$なので，同様にして$P(B)=\dfrac{1}{3}$であることがわかります．
+さらに，$A\cap B=\varnothing$なので，$P(A\cup B)=P(A)+P(B)=\dfrac{5}{6}$
+と計算できます．
+\item[(3)]
+$P$の性質2において$F=G=\varnothing$とすると$P(\varnothing)=2P(\varnothing)$となるので，
+$P(\varnothing)=0$が従います．
+また，$P(\Omega)=1$であることは(2)の$P(A)$と同様の計算をすれば確認できます．
+\end{itemize}
+
+\Subsubsection{問題\ref{checkofsigmaalgebra}}
+$\{\omega\in\Omega\mid\omega_{2018}=1\}$
+
+\Subsubsection{問題\ref{checkofadditivity}}
+$F_1=F$，$F_2=G$とし，$k=3,4,\cdots$に対して$F_k=\varnothing$とします．
+すると，この$F_1,F_2,\cdots\in\mathcal{F}$は
+「相異なる自然数$i,j$に対して$F_i\cap F_j=\varnothing$となる」
+という条件を満たしています．
+従って$P(F_1\cup F_2\cup\cdots)=P(F_1)+P(F_2)+\cdots$が成り立ちますが，
+$F_n$たちの定義から$F_1\cup F_2\cup\cdots=F\cup G$，
+また$k=3,4,\cdots$に対して$P(F_k)=0$なので，
+$P(F\cup G)=P(F)+P(G)$となります．
+さらに
+\[ \Omega=\{\omega_1=1\}\cup\{\omega_1=2\}\cup
+\{\omega_1=3\}\cup\{\omega_1=4\}\cup
+\{\omega_1=5\}\cup\{\omega_1=6\} \]
+と表せる
+\footnote{$\{\omega\in\Omega\mid\omega_1=1\}=\{\omega_1=1\}$
+のように省略して書いています．}
+ことに注意すると，先ほど導いたことを用いて
+\[ P(\Omega)=P(\{\omega_1=1\})+P(\{\omega_1=2\})+
+P(\{\omega_1=3\})+P(\{\omega_1=4\})+P(\{\omega_1=5\})+
+P(\{\omega_1=6\}) \]
+であることがわかります．
+%よって$P$の定義2から，
+上式の右辺の各項の値は$\dfrac{1}{6}$なので，
+$P(\Omega)=1$となります．
+
+\Subsubsection{問題\ref{checkofrandomvariable}}
+$P(\{\omega\in\Omega\mid S_2(\omega)=0\})
+%=P(S_2=0)
+$は
+「理想的なサイコロを2回投げた時に1の目が2回とも出ない確率」
+を表していますので，その値は$\dfrac{25}{36}$です．
+%$P$の定義に従って計算すると以下のようになります．
+%\begin{align*}
+%P(S_2=0)&=P((E_1(2)\cup E_1(3)\cup E_1(4)\cup E_1(5)\cup E_1(6))\cap
+%(E_2(2)\cup E_2(3)\cup E_2(4)\cup E_2(5)\cup E_2(6))) \\
+%&=P((E_1(2)\cap E_2(2))\cup(E_1(2)\cap E_2(3))\cup\cdots\cup(E_1(6)\cap E_2(6))) \\
+%&=P(E_1(2)\cap E_2(2))+P(E_1(2)\cap E_2(3))+\cdots+P(E_1(6)\cap E_2(6))) \\
+%&=\frac{25}{36}
+%\end{align*}
+
+\Subsubsection{問題\ref{test}}
+\ref{randomvariable}節以降の説明を真似てみましょう．
+
+以下，$(\Omega,\mathcal{F},P)$を\ref{subsec:infiniteprobsp}節で定義したものとします．
+$n=1,2,\cdots$に対し，$X_n$を次のように定めます．
+\[ すべての\ \omega\in\Omega\ に対しX_n(\omega)=\omega_n \]
+定義からわかるように，$X_n$は
+「根元事象$\omega\in\Omega$の$n$回目の目を教えてくれる関数」
+であると言えます．
+さらに，この$X_1,X_2,\cdots$たちを使って，$S_1,S_2,\cdots$を
+\[ すべての\ \omega\in\Omega\ に対し
+S_n(\omega)=X_1(\omega)+X_2(\omega)+\cdots+X_n(\omega) \]
+と定義すれば，$S_n$は
+「根元事象$\omega\in\Omega$において，
+$n$回目までの目の和がいくつかを教えてくれる関数」
+となります．
+この$X_n$，$S_n$たちに対して定理\ref{stronglawoflargenumber}を適用しましょう．
+
+各回のサイコロの目は互いに影響しあわないので，
+確率変数$X_1,X_2,\cdots$は独立です．
+また，すべての$k=1,2,\cdots$に対して
+\[ E(X_k)=1\cdot\frac{1}{6}+2\cdot\frac{1}{6}
++3\cdot\frac{1}{6}+4\cdot\frac{1}{6}+5\cdot\frac{1}{6}
++6\cdot\frac{1}{6}=\frac{7}{2}，
+E(X_k^4)=\frac{1^4+2^4+3^4+4^4+5^4+6^4}{6}=\frac{2275}{6} \]
+となります．
+従って，定理\ref{stronglawoflargenumber}の仮定がすべて満たされているので，
+$\dfrac{S_n}{n}$は$\dfrac{7}{2}$すなわち$3.5$に概収束することがわかります．
+つまり，「理想的なサイコロを何回も投げていくと，
+出た目の数の合計を投げた回数で割った値は$3.5$に近づく」
+ことが示せました．
+
+\begin{thebibliography}{3}
+\bibitem{Chugaku}文部科学省，『中学校学習指導要領解説 数学編』，2008
+\bibitem{Kohkoh}文部科学省，『高等学校学習指導要領解説 数学編 理数編』，2009
+\bibitem{Williams}David Williams, \textit{Probability with Martingales}, Cambridge University Press, 1991
+%\bibitem{Funaki}舟木 直久，『確率論』，朝倉書店，2004
+\end{thebibliography}
+
+%\Section{第1セクションのタイトル}
+%第1セクションの内容
+%\Subsection{第1.1サブセクションのタイトル}
+%1.1サブセクションの内容
+%\Subsubsection{第1.1.1サブセクションのタイトル}
+%1.1.1サブセクションの内容
+%\Subsection{第1.2サブセクションのタイトル}
+%1.2サブセクションの内容
+%\Subsection{第1.3サブセクションのタイトル}
+%1.3サブセクションの内容
+%\Section{第2セクションのタイトル}
+%第2セクションの内容
+%\Subsection{第2.1サブセクションのタイトル}
+%2.1サブセクションの内容
+%\Subsection{第2.2サブセクションのタイトル}
+%2.2サブセクションの内容
+
+\end{document}
+
+%\begin{thebibliography}{9}
+%\item Hull, J. C. (2014), Options, Futures, and Other Derivatives, 9th edition (Upper Saddle River, NJ: Prentice Hall).
+%\end{thebibliography}
