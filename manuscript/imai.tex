@@ -231,7 +231,7 @@ t>T\Rightarrow e^{\frac{t}{2}}>t^{\operatorname{Re}(z)+1}
 \[
 0\leq\lim_{N\to\infty}\left|\int_0^N\left\{e^{-t}-\left(1-\frac{t}{N}\right)^N\right\}t^{z-1}\;dt\right|\leq\lim_{N\to\infty}N^{-1}\tau=0
 \]
-はさみうちの原理\footnote{十分大きい$n$で$a_n<c_n<b_n$かつ$\lim_{n\to\infty}a_n=\lim_{n\to\infty}b_n=r$なら，$\lim_{n\to\infty}c_n=r$という原理．}より，
+はさみうちの原理\footnote{十分大きい$n$で$a_n<c_n<b_n$かつ$\lim_{n\to\infty}a_n=\lim_{n\to\infty}b_n=r$なら，$\lim_{n\to\infty}c_n=r$という原理です．}より，
 \[
 \lim_{N\to\infty}\left|\int_0^N\left\{e^{-t}-\left(1-\frac{t}{N}\right)^N\right\}t^{z-1}\;dt\right|=0
 \]
@@ -345,7 +345,7 @@ n^{-s}=\int_{n-1}^nn^{-s}\;dt\leq\int_{n-1}^nt^{-s}\;dt
 \[
 0<\left|\sum_{n=N+1}^{M}n^{-s}\right|\leq\sum_{n=N+1}^{M}\left|n^{-s}\right|=\sum_{n=N+1}^{M}n^{-\sigma}\leq\sum_{n=N+1}^{\infty}n^{-\sigma}=Z(\sigma)-\sum_{n=1}^{N}n^{-\sigma}
 \]
-が成り立つので，$r_N=Z(\sigma)-\sum_{n=1}^{N}n^{-\sigma}$とおくと，数列${a_n}=\left\{\sum_{k=1}^nk^{-s}\right\}$の値を複素数平面にプロットすると，$a_N$以降の点はすべて，$a_N$を中心とした半径$r_N$の円($C_N$とする)の内部および周のどこかにある．$|a_{N+1}-a_N|+r_{N+1}=r_N$より，$C_{N+1}$は$C_N$に内側から接していて，$\lim_{N\to\infty}r_N=0$なので，$\sum_{n=1}^{\infty}n^{-s}$は収束します\footnote{高校数学の範囲ではそもそもまだ極限を厳密な形で定義していないので感覚的な議論になってしまっていますが，理系の学生が大学1年生で習う$\epsilon-\delta$論法を使えばこの証明もちゃんと数式化できます．}．
+が成り立つので，$r_N=Z(\sigma)-\sum_{n=1}^{N}n^{-\sigma}$とおくと，数列${a_n}=\left\{\sum_{k=1}^nk^{-s}\right\}$の値を複素数平面にプロットすると，$a_N$以降の点はすべて，$a_N$を中心とした半径$r_N$の円($C_N$とする)の内部および周のどこかにあります．$|a_{N+1}-a_N|+r_{N+1}=r_N$より，$C_{N+1}$は$C_N$に内側から接していて，$\lim_{N\to\infty}r_N=0$なので，$\sum_{n=1}^{\infty}n^{-s}$は収束します\footnote{高校数学の範囲ではそもそもまだ極限を厳密な形で定義していないので感覚的な議論になってしまっていますが，理系の学生が大学1年生で習う$\epsilon-\delta$論法を使えばこの証明もちゃんと数式化できます．}．
 
 $\sum_{n=1}^{\infty}n^{-s}$は$\operatorname{Re}(s)>1$でないときには収束するとは限りません．たとえば$s=\frac{1}{2}$とすれば
 \[
@@ -430,8 +430,8 @@ n^{-s}\pi^{-\frac{s}{2}}\Gamma\left(\frac{s}{2}\right)=&\int_0^{\infty}e^{-t}\le
 \[
 \zeta(2)=Z(2)=\sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6}
 \]
-より\footnote{$\zeta(2)$の値を求める問題はバーゼル問題と呼ばれています．$\zeta(2)=\frac{\pi^2}{6}$の証明などは，ネットで検索すれば出てくるはずですし，前号の$e\pi isode$にもバーゼル問題に関連した記事があります．}，$\zeta(-1)=-\frac{1}{12}$となります．
-ここで，冒頭の(\ref{zeta-1})式をみてみましょう．この式の意味が分かったでしょうか．$1+2+3+4\cdots$は，この式においては，$Z(s)=\sum_{n=1}^{\infty}n^{-s}$を延長\footnote{数学用語では解析接続といいます}した関数である$\zeta(s)$に$s=-1$を代入したものということを表していたのです．
+より\footnote{$\zeta(2)$の値を求める問題はバーゼル問題と呼ばれています．$\zeta(2)=\frac{\pi^2}{6}$の証明などは，ネットで検索すれば出てくるはずですし，前号の$e^{\pi i}sode$にもバーゼル問題に関連した記事があります．}，$\zeta(-1)=-\frac{1}{12}$となります．
+ここで，冒頭の(\ref{zeta-1})式をみてみましょう．この式の意味が分かったでしょうか．$1+2+3+4+\cdots$は，この式においては，$Z(s)=\sum_{n=1}^{\infty}n^{-s}$を延長\footnote{数学用語では解析接続といいます．}した関数である$\zeta(s)$に$s=-1$を代入したものということを表していたのです．
 
 \section{素数定理とリーマン予想}
 
@@ -449,7 +449,7 @@ $x$を実数とする．$\pi(x)$を1以上$x$以下の素数の個数だとす�
 \[
 \operatorname{Re}(s)=1\text{のとき，}\zeta(s)\neq 0
 \]
-という命題と同値であり，これを用いて素数定理がアダマール\footnote{Jacques Salomon Hadamard, 1865--1963}とド・ラ・ヴァレー・プーサン\footnote{Charles-Jean de La Vall\'ee Poussin, 1866--1962}によって証明されています．
+という命題と同値であり，これを用いて素数定理がアダマール\footnote{Jacques Salomon Hadamard, 1865--1963}とド・ラ・ヴァレー・プーサン\footnote{Charles-Jean de la Vall\'ee Poussin, 1866--1962}によって証明されています．
 
 リーマンゼータ関数と素数の関係性については次の式がよく表しています．
 \begin{equation}\label{zetaprod}
